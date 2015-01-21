@@ -1,0 +1,9 @@
+﻿<div data-ng-controller="bluetoothController">
+    <h2 style="margin-right: auto;margin-left: auto;display: block;width: 350px;">Select bluetooth device</h2>
+    <ul style="padding-right: 40px;">
+        <li data-ng-repeat="device in deviceList" style="display:block;padding:10px;border:1px solid black;">
+            <div data-ng-click="connect(device.address)">{{device.name}}</div>
+        </li>
+    </ul>
+    <div style="display:block">{{feedback}}</div>    
+</div>

@@ -1,0 +1,15 @@
+D:\Projects\DroidCommand\DroidCommand\bin\DroidCommand.dll
+D:\Projects\DroidCommand\DroidCommand\bin\DroidCommand.pdb
+D:\Projects\DroidCommand\DroidCommand\obj\Debug\DroidCommand.csprojResolveAssemblyReference.cache
+D:\Projects\DroidCommand\DroidCommand\obj\Debug\DroidCommand.dll
+D:\Projects\DroidCommand\DroidCommand\obj\Debug\DroidCommand.pdb
+C:\projects\DroidCommand\droidcommand_poc\DroidCommand\bin\DroidCommand.dll
+C:\projects\DroidCommand\droidcommand_poc\DroidCommand\bin\DroidCommand.pdb
+C:\projects\DroidCommand\droidcommand_poc\DroidCommand\obj\Debug\DroidCommand.csprojResolveAssemblyReference.cache
+C:\projects\DroidCommand\droidcommand_poc\DroidCommand\obj\Debug\DroidCommand.dll
+C:\projects\DroidCommand\droidcommand_poc\DroidCommand\obj\Debug\DroidCommand.pdb
+C:\projects\DroidCommand\droidcommand\DroidCommand\bin\DroidCommand.dll
+C:\projects\DroidCommand\droidcommand\DroidCommand\bin\DroidCommand.pdb
+C:\projects\DroidCommand\droidcommand\DroidCommand\obj\Debug\DroidCommand.csprojResolveAssemblyReference.cache
+C:\projects\DroidCommand\droidcommand\DroidCommand\obj\Debug\DroidCommand.dll
+C:\projects\DroidCommand\droidcommand\DroidCommand\obj\Debug\DroidCommand.pdb
