@@ -6,32 +6,137 @@ ul
     list-style-type: none;    
 }
 
-/*li {
-    display: inline-block;
-    padding: 2px;
-}*/
 
-#navigationBar
+.fill { 
+    min-height: 100%;
+    height: 100%;
+}
+
+html, body {
+    height: 100%;
+}
+
+.noRightPadding
 {
-    top: 0;
-    right: 0;
-    position: absolute;
+    padding-right: 0px;
+}
+
+.noLeftPadding
+{
+    padding-left: 0px;
+}
+
+.noLeftOrRightPadding
+{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.navigationBackground
+{
+    background-color: white;
 }
 
 .nav_item
 {
-    width: 100%;
+    height: 20%;
     text-align: center;
-    height: 50px;
-    vertical-align: middle;
+}
+
+/* ODYSSEY VIEW*/
+.imgOdyssey
+{
+    width: 50%;
+    height: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.imgRobot
+{
+    background-image: url(../img/robot.png);
+}
+
+.imgBluetooth
+{
+    background-image: url(../img/bluetooth.png);
+}
+
+.imgControl
+{
+    background-image: url(../img/control.png);
+}
+
+.imgJoyStick
+{
+    background-image: url(../img/joystick.png);
+}
+
+.imgProgram
+{
+    background-image: url(../img/program.png);
+}
+
+.imgRobotGames
+{
+    background-image: url(../img/robotGames.png);
+}
+
+.imgRobotMultiple
+{
+    background-image: url(../img/robotMultiple.png);
+}
+
+.imgRobotRoam
+{
+    background-image: url(../img/robotRoam.png);
+}
+
+
+.imgSettings
+{
+    background-image: url(../img/settings.png);
+}
+
+.imgOdysseyRouteBackgroundArrow
+{
+    background-image: url(../img/arrow.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    height: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 60%;
 }
 
 
 .odysseyRouteItems
 {
-    display:inline-block;
-    border: black solid;
-    width: 100px;
+    height: 100%;
+    font-size: 1em;
+    text-align: center;
+}
+.odysseyRouteItemText
+{
+    height:40%;
+    width:100%;
+}
+
+.odysseyRouteBackground
+{
+    background-color: darkgrey;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.odysseyBackground
+{
+
+    background-color: aliceblue;
 
 }
 
@@ -40,14 +145,206 @@ ul
     text-align: center;
     font-weight:bold;
 }
+/*============================================*/
+/* Control View*/
 
-.profileBox {
-   
-}
-.profileBox img 
+.imgControlsMenu, .imgControls
 {
-    max-width: 60px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
-.gamesBox {
 
+.imgControlsMenu
+{
+    border: black solid 1px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+/* control selection images*/
+
+.imgControlsMenuJoystickUnselected
+{
+    background-image: url(../img/joystickUnsel.png);
+}
+
+.imgControlsMenuJoystick
+{
+    background-image: url(../img/joystick.png);
+}
+
+.imgControlsMenuDifferential
+{
+    background-image: url(../img/controlMenuButtons.png);
+}
+
+.imgControlsMenuDifferentialUnselected
+{
+    background-image: url(../img/controlMenuButtonsUnsel.png);
+}
+
+.imgControlsMenuMotion
+{
+    background-image: url(../img/controlMenuMotion.png);
+}
+
+.imgControlsMenuMotionUnselected
+{
+    background-image: url(../img/controlMenuMotionUnsel.png);
+}
+
+
+.imgJoystickCentre
+{
+    background-image: url(../img/JoystickControlCentre.png);
+}
+
+.imgJoystickLeft
+{
+    background-image: url(../img/JoystickControlLeftArrow.png);
+}
+
+.imgJoystickRight
+{
+    background-image: url(../img/JoystickControlRightArrow.png);
+}
+
+.imgJoystickTop
+{
+    background-image: url(../img/JoystickControlTopArrow.png);
+}
+
+.imgJoystickBottom
+{
+    background-image: url(../img/JoystickControlBottomArrow.png);
+}
+
+.controlShootCommand
+{
+    background-image: url(../img/controlsShootCommand.png);
+}
+
+.controlSpinCommand
+{
+    background-image: url(../img/controlsSpinCommand.png);
+}
+
+.controlWaggleCommand
+{
+    background-image: url(../img/controlsWaggleCommand.png);
+}
+
+.controlMoreCommand
+{
+    background-image: url(../img/controlsMoreCommand.png);
+}
+
+/*============================================*/
+/* Status View*/
+.controlModesMenu
+{
+    border: darkgray solid 1px;
+    border-radius: 20px;
+    background-color: lightgray;
+    color: darkgray;
+    text-align: center;
+    display:inline;
+}
+
+.controlModesSelected
+{
+    color: black;
+}
+
+/* Status Images*/
+
+.imgStatus
+{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.imgStatusRobot
+{
+    background-image: url(../img/robot.png);
+}
+
+.imgRobotSensorIcon
+{
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    background-image: url(../img/robotSensors.png);
+}
+
+.imgRobotDetectedIcon
+{
+    background-image: url(../img/robotIconGrey.png);
+}
+
+.imgSelectRobotLeft
+{
+    background-image: url(../img/selectRobotLeft.png);
+}
+
+.imgSelectRobotRight
+{
+    background-image: url(../img/selectRobotRight.png);
+}
+
+.imgSelectAllRobots
+{
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    background-image: url(../img/robotMultiple.png);
+}
+.imgSelectSettings
+{
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    background-image: url(../img/settings.png);
+}
+
+.imgRobotEmotionHappy
+{
+    background-image: url(../img/emotionHappy.png);
+}
+
+.imgRobotEmotionHappyColourless
+{
+    background-image: url(../img/emotionHappyColourless.png);
+}
+
+.imgRobotEmotionNeutral
+{
+    background-image: url(../img/emotionNeutral.png);
+}
+
+.imgRobotEmotionSad
+{
+    background-image: url(../img/emotionSad.png);
+}
+
+.imgRobotEmotionSadColourless
+{
+    background-image: url(../img/emotionSadColourless.png);
+}
+
+/* Status classes*/
+
+.robotNameDisplayTag
+{
+    background-color: darkgray;
+    border-radius: 15px;
+    text-transform: uppercase;
+    text-align: center;
 }

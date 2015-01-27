@@ -4,28 +4,17 @@
     <title>Droid Command</title>
 
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" /> 
-    <link rel="stylesheet" type="text/css" href="css/styles.css" />  
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <!--custom slider css  -->
+    <link rel="stylesheet" type="text/css" href="css/slider.css" /> 
     <link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.min.css" /> 
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 </head>
 <body data-ng-app="driodCommand" style="overflow:hidden">
-<!--    <div data-ng-view="">
 
-    </div>
--->
-    <div ui-view>
+    <div ui-view class="fill">
 
-    </div>
-
-    <div id="navigationBar" style="width:20%;display:inline;">
-        <ul class="nav nav-pills nav-stacked">
-            <li><div class="nav_item active"><a ui-sref="odyssey">Odyssey </a></div></li>
-            <li><div class="nav_item"><a ui-sref="robotControl">Control</a></div></li>
-            <li><div class="nav_item"><a ui-sref="games">Games</a></div></li>
-            <li><div class="nav_item"><a ui-sref="central">Central</a></div></li>
-            <li><div class="nav_item"><a ui-sref="droidWars">Droid Wars</a></div></li>
-        </ul>
     </div>
     <!--<script src="cordova.js"></script>-->
 
@@ -36,9 +25,19 @@
     <!--<script type="text/javascript" src="js/ext/angular-route.min.js" ></script>-->
     <!-- angular-ui-router -->
     <script type="text/javascript" src="js/ext/angular-ui-router.min.js" ></script>
-
+    <!--custom slider  -->
+    <script type="text/javascript" src="js/ext/bootstrap-slider.js" ></script>
+    
     <script type="text/javascript" src="js/app.js" ></script>
     <script type="text/javascript" src="js/controllers/mainController.js" ></script>
     <script type="text/javascript" src="js/controllers/bluetoothController.js" ></script>
+    <script type="text/javascript" src="js/controllers/navigatorController.js"></script>
+    <script type="text/javascript" src="js/controllers/robotControlController.js"></script>
+    <script type="text/javascript" src="js/controllers/centralController.js"></script>
+    <script type="text/javascript" src="js/controllers/droidWarsController.js"></script>
+    <script type="text/javascript" src="js/controllers/gamesController.js"></script>
+    <script type="text/javascript" src="js/controllers/robotControlControllers/joystickController.js"></script>
+    <script type="text/javascript" src="js/controllers/robotControlControllers/robotStatusController.js"></script>
+
 </body>
 </html>

@@ -62,14 +62,26 @@
     <Content Include="index.html" />
     <Content Include="js\app.js" />
     <Content Include="js\controllers\bluetoothController.js" />
+    <Content Include="js\controllers\centralController.js" />
+    <Content Include="js\controllers\droidWarsController.js" />
+    <Content Include="js\controllers\gamesController.js" />
+    <Content Include="js\controllers\navigatorController.js" />
     <Content Include="js\controllers\robotControlController.js" />
     <Content Include="js\controllers\mainController.js" />
+    <Content Include="js\controllers\robotControlControllers\joystickController.js" />
+    <Content Include="js\controllers\robotControlControllers\robotStatusController.js" />
     <Content Include="js\ext\angular-route.min.js" />
     <Content Include="js\ext\angular.min.js" />
     <Content Include="js\ext\jquery-1.11.0.min.js" />
     <Content Include="views\bluetoothSelection.html" />
+    <Content Include="views\central.html" />
+    <Content Include="views\droidWars.html" />
+    <Content Include="views\games.html" />
+    <Content Include="views\navigatorMainView.html" />
     <Content Include="views\robotControl.html" />
     <Content Include="views\main.html" />
+    <Content Include="views\robotControlViews\robotControl_JoystickControl.html" />
+    <Content Include="views\robotControlViews\robotControl_RobotStatus.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -5,42 +5,78 @@
         // ODYSSEY STATE ========================================
         $stateProvider.state('odyssey', {
             url: '/odyssey',
-                templateUrl: 'views/main.html'
+            views: {
+                // the main template (relatively named)
+                '': { templateUrl: 'views/main.html' },
+
+                //the navigator
+                'navColumn@odyssey': {
+                    templateUrl: 'views/navigatorMainView.html',
+                    controller: 'NavigatorController'
+                }
+            }
         })
+        
         // ROBOTCONTROL STATE ========================================
             .state('robotControl', {
                 url: '/robotControl',
-                templateUrl: 'views/robotControl.html'
-            })
-            // nested list with custom controller
-            .state('robotControl.list', {
-                url: '/list',
-                templateUrl: 'views/home-list.html',
-                controller: function ($scope) {
-                    $scope.dogs = ['Bernese', 'Husky', 'Goldendoodle'];
-                }
-            })
+                views: {
+                    // the robotControl template (relatively named)
+                    '': { templateUrl: 'views/robotControl.html' },
+                    //the navigator
+                    'navColumn@robotControl': {
+                        templateUrl: 'views/navigatorMainView.html',
+                        controller: 'NavigatorController'
+                    },
+                    'leftControlColumn@robotControl': {
+                        templateUrl: 'views/robotControlViews/robotControl_JoystickControl.html',
+                        controller: 'JoystickController'
+                    },
+                    'rightControlColumn@robotControl': {
+                        templateUrl: 'views/robotControlViews/robotControl_RobotStatus.html',
+                        controller: 'RobotStatusController'
+                    }
 
-            // nested list with just some random string data
-            .state('robotControl.paragraph', {
-                url: '/paragraph',
-                template: 'I could sure use a drink right now.'
+                }
             })
         // GAMES STATE ========================================
             .state('games', {
                 url: '/games',
-                templateUrl: 'views/games.html'
-
+                views: {
+                    // the games template (relatively named)
+                    '': { templateUrl: 'views/games.html' },
+                    //the navigator
+                    'navColumn@games': {
+                        templateUrl: 'views/navigatorMainView.html',
+                        controller: 'NavigatorController'
+                    }
+                }
             })
         // CENTRAL STATE ========================================
             .state('central', {
                 url: '/central',
-                templateUrl: 'views/central.html'
-
+                views: {
+                    // the central template (relatively named)
+                    '': { templateUrl: 'views/central.html' },
+                   //the navigator
+                    'navColumn@central': {
+                        templateUrl: 'views/navigatorMainView.html',
+                        controller: 'NavigatorController'
+                    }
+                }
             })
         // DROIDWARS STATE ========================================
             .state('droidWars', {
                 url: '/droidWars',
-                templateUrl: 'views/droidWars.html'
-            });
+                views: {
+                    // the central template (relatively named)
+                    '': { templateUrl: 'views/droidWars.html' },
+                    //the navigator
+                    'navColumn@droidWars': {
+                        templateUrl: 'views/navigatorMainView.html',
+                        controller: 'NavigatorController'
+                    }
+                }
+            })
+
     });

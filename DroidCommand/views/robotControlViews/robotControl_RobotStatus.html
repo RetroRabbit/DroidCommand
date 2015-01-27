@@ -1,0 +1,87 @@
+﻿<div id="robotStatus"  class="fill">
+    <div class="row" style="height: 20%">
+        <div class=" col-xs-12 fill">
+          <div class="row" style="height: 20%"></div>
+             <div class="row" style="height: 60%">
+                <div id="driveControlTab" class ="col-xs-6 controlModesMenu fill">
+                    <div ng-class="{controlModesSelected : isControlMode('drive')}">DRIVE</div>
+                </div>
+                <div id="programsControlTab" class ="col-xs-6 controlModesMenu fill">
+                    <div ng-class="{controlModesSelected : isControlMode('program')}">PROGRAM</div>
+                </div>
+            </div>
+           <div class="row" style="height: 20%"></div>
+        </div>
+    </div>
+        
+    <div class="row" style="height: 40%">
+        <div class ="col-xs-3 fill noRightPadding" >
+            <div style="height:40%" >
+                <div class="imgStatus" data-ng-class="{imgRobotSensorIcon : !isRobotDetected(),imgRobotDetectedIcon : isRobotDetected()}" style="height: 60%;"></div>
+                <div id="SenorsText" style="text-align:center;">{{ nameOrSensors }}</div>               
+            </div>
+            <div style="height:60%">
+
+            </div>
+        </div>
+        <div class ="col-xs-6 fill noLeftOrRightPadding">
+            <div class="imgStatusRobot imgStatus"></div>
+
+        </div>
+        <div class ="col-xs-3 fill">
+            <input type="text" class="span2" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-14" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
+        </div>
+    </div>
+
+    <div class="row" style="height: 10%">
+        <div class ="col-xs-2 fill">
+            <div data-ng-click="selectRobotLeft()" class="imgSelectRobotLeft imgStatus"></div>
+        </div>
+        <div class ="col-xs-8 fill robotNameDisplayTag">
+            {{ robotName }}
+        </div>
+        <div class ="col-xs-2 fill">
+            <div  data-ng-click="selectRobotRight()" class="imgSelectRobotRight imgStatus"></div>
+        </div>
+    </div>
+
+    <div class="row" style="height: 30%">
+        <div class ="col-xs-2 fill noLeftOrRightPadding">
+            <div style="height:5%"></div>
+            <div data-ng-click="selectAllRobots()" class="imgSelectAllRobots imgStatus"  style="height:90%"></div>
+            <div style="height:5%"></div>
+        </div>
+        <div class ="col-xs-8 fill">
+            <div class="row" style="height:60%">
+                <div class="col-xs-12 fill noLeftOrRightPadding">
+                    <div id="robotEmotionDisplay" style="width: 40%;" class="imgStatus" data-ng-class="{imgRobotEmotionHappy : checkRobotEmotion('happy'),imgRobotEmotionNeutral : checkRobotEmotion('neutral'),imgRobotEmotionSad : checkRobotEmotion('sad') }" ></div>
+                </div>         
+            </div>
+            
+            <div  id="robotEmotionBarDisplay" class="row" style="height:40%">
+                <div class="col-xs-2 fill noLeftOrRightPadding">
+                    <div class="imgRobotEmotionSadColourless imgStatus"></div>
+                </div>
+                <div class="col-xs-8 fill noLeftOrRightPadding">
+                    <div style="padding-top: 10%; padding-left: 1%; padding-right: 1%;">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning" 
+                          role="progressbar" aria-valuenow="{{getHappinessPercentage()}}" aria-valuemin="0" 
+                          aria-valuemax="100" ng-style="{width : ( getHappinessPercentage() + '%' ) }">
+                            <span class="sr-only">{{getHappinessPercentage()}}% Complete (warning)</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class ="col-xs-2 fill noLeftOrRightPadding">
+                    <div class="imgRobotEmotionHappyColourless imgStatus"></div>
+                </div>
+            </div>
+        </div>
+        <div class ="col-xs-2 fill noLeftOrRightPadding">
+            <div style="height:5%"></div>
+            <div data-ng-click="selectSettings()" class="imgSelectSettings imgStatus"  style="height:90%"></div>
+            <div style="height:5%"></div>
+        </div>
+    </div>
+</div>

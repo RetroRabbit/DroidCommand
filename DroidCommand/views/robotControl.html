@@ -1,0 +1,19 @@
+﻿<div data-ng-controller="RobotControlController" class="container-fluid fill">
+
+    <div class="row fill">
+        <div class="col-xs-10 fill">
+            <div class="row fill">
+                <div ui-view="leftControlColumn" class="col-xs-6 fill odysseyBackground">
+                </div>
+                <div ui-view="rightControlColumn"  class="col-xs-6 fill noRightPadding">
+                </div>
+            </div>          
+        </div>
+
+        <!-- Navigator View -->
+        <div class="col-xs-2 fill noRightPadding">
+            <div ui-view="navColumn" class="fill"></div>
+        </div>
+    </div>
+
+</div>
