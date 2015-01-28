@@ -84,6 +84,7 @@
     <Content Include="views\robotControlViews\robotControl_DifferentialControlRight.html" />
     <Content Include="views\robotControlViews\robotControl_JoystickControl.html" />
     <Content Include="views\robotControlViews\robotControl_MotionControl.html" />
+    <Content Include="views\robotControlViews\robotControl_ProgramRobot.html" />
     <Content Include="views\robotControlViews\robotControl_RobotStatus.html" />
     <Content Include="Web.config" />
   </ItemGroup>

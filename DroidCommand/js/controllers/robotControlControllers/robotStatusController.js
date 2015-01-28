@@ -1,21 +1,127 @@
 ﻿angular.module('driodCommand')
-.controller('RobotStatusController', ['$scope', '$location', '$http', function ($scope, $location, $http) {
+.controller('RobotStatusController', ['$scope', '$location', '$http', '$state', function ($scope, $location, $http, $state) {
 
 
+    $scope.selectedDroidPosition = 0;
+
+    $scope.allDroid = {
+        ID: 0,
+        Name: 'All',
+        Img: 'img/robot.png',
+        Mode: 'N/A',
+        Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+        Battery: 100,
+        EmotionLevel: 100
+    };
+
+    //robot data
+    $scope.droidList = [
+    {
+        ID: 1,
+        Name: 'Robocop',
+        Img: 'img/robot.png',
+        Mode: 'Autonomous',
+        Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+        Battery: 50,
+        EmotionLevel: 80
+    },
+    {
+        ID: 2,
+        Name: 'T1000',
+        Img: 'img/robot.png',
+        Mode: 'Autonomous',
+        Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+        Battery: 40,
+        EmotionLevel: 20
+    },
+    {
+        ID: 3,
+        Name: 'Data',
+        Img: 'img/robot.png',
+        Mode: 'Autonomous',
+        Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+        Battery: 60,
+        EmotionLevel: 60
+    }];
+
+    $scope.getDroidList = function () {
+        return $scope.droidList;
+    }
+    $scope.updateDroidlist = function () {
+        //add service here
+        $scope.droidList = null;
+    }
+
+
+    $scope.getSelectedDroid = function () {
+        return $scope.droidList[$scope.selectedDroidPosition];
+    }
+
+    //next droid in the array
+    $scope.nextDroid = function () {
+        if ($scope.selectedDroidPosition < $scope.droidList.length -1)
+            $scope.selectedDroidPosition++;
+        $scope.activeDroid = $scope.getSelectedDroid()
+    }
+
+    //previous droid in the array droid in the array
+    $scope.previousDroid = function () {
+        if ($scope.selectedDroidPosition > 0)
+            $scope.selectedDroidPosition--;
+        else
+            $scope.selectedDroidPosition == 0;
+        $scope.activeDroid = $scope.getSelectedDroid()
+    }
+
+    // Set the activeDroid
+    $scope.activeDroid = $scope.getSelectedDroid();
+    //default to sensors
     $scope.nameOrSensors = "Sensors";
-    $scope.robotName = "robocop";
 
-    $scope.robotEmotion = "happy";
+
     $scope.getRobotEmotion = function ()
     {
-        return $scope.robotEmotion;
+        if ($scope.activeDroid.EmotionLevel <= 30) {
+            return "sad";
+        }
+        else if ($scope.activeDroid.EmotionLevel <= 60)
+        {
+            return "neutral";
+        }
+        else
+        {
+            return "happy";
+        }
     }
 
-    $scope.happinessPercentage = 60;
+    $scope.checkRobotEmotion = function (emotion) {
+        return $scope.getRobotEmotion() === emotion;
+    }
+
     $scope.getHappinessPercentage = function () {
-        return $scope.happinessPercentage;
+        return $scope.activeDroid.EmotionLevel;
     }
 
+    $scope.getBatteryPercentage = function () {
+        return $scope.activeDroid.Battery;
+    }
+
+    $scope.selectRobotLeft = function () {
+        $scope.previousDroid();
+    }
+
+    $scope.selectRobotRight = function () {
+        $scope.nextDroid();
+    }
+
+    $scope.selectAllRobots = function () {
+        $scope.selectedDroidPosition = 0;
+        $scope.activeDroid = $scope.allDroid;
+    }
+
+    $scope.selectSettings = function () {
+        alert("Settings");
+    }
 
     //todo get this from parent
     $scope.controlMode = "drive";
@@ -28,7 +134,20 @@
         $scope.controlMode = newControlMode;
     }
 
-    $scope.isControlMode = function (controlMode)
+    $scope.navigateBetweenModes = function(mode)
+    {
+        if (mode == "drive") {
+            $scope.setControlMode("drive");
+            $scope.navigateBetweenControls($scope.getControlSelected());
+        }
+        else
+        {
+            $scope.setControlMode("program");
+            $state.go('robotControl.program');
+        }
+    }
+
+    $scope.isMode = function (controlMode)
     {
         if ($scope.getControlMode() === controlMode) {
             return true;
@@ -38,10 +157,6 @@
 
     // end of todo
 
-    $scope.checkRobotEmotion = function (emotion) {
-       return $scope.getRobotEmotion() === emotion;
-    }
-
     //add detection
     $scope.isRobotDetected = function ()
     {
@@ -50,23 +165,7 @@
     }
 
 
-    $scope.selectRobotLeft = function()
-    {
-        alert("left");
-    }
-
-    $scope.selectRobotRight = function ()
-    {
-        alert("right");
-    }
-
-    $scope.selectAllRobots = function () {
-        alert("All Robots");
-    }
-
-    $scope.selectSettings = function () {
-        alert("Settings");
-    }
+//
 
     function refreshSwatch(ev, ui) {
         var red = $scope.colorpicker.red,

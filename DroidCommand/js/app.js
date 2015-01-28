@@ -55,7 +55,7 @@
                 url: '/motionControl',
                 views: {
                     'leftControlColumn@robotControl': {
-                        templateUrl: 'views/robotControlViews/robotControl_MotionControl.html',
+                        templateUrl: 'views/robotControlViews/robotControl_MotionControl.html'
                     },
                     //the navigator
                     'navColumn@robotControl': {
@@ -64,49 +64,40 @@
                     },
                 }
             })
+            .state('robotControl.program', {
+                url: '/program',
+                views: {
+                    'leftControlColumn@robotControl': {
+                        templateUrl: 'views/robotControlViews/robotControl_programRobot.html'
+                    }
+                }
+            })
         // GAMES STATE ========================================
-            .state('games', {
-                url: '/games',
-                views: {
-                    // the robotControl template (relatively named)
-                    '': { templateUrl: 'views/games.html' },
-                    //the navigator
-                    'navColumn@games': {
-                        templateUrl: 'views/robotControlViews/robotControl_DifferentialControlRight.html',
-                    },
-                    'leftControlColumn@games': {
-                            templateUrl: 'views/robotControlViews/robotControl_DifferentialControlLeft.html',
-                    },
-                    'rightControlColumn@games': {
-                        templateUrl: 'views/robotControlViews/robotControl_RobotStatus.html',
-                        controller: 'RobotStatusController'
-                    }
-
-                }
-            })
-
-
+	        .state('games', {
+	            url: '/games',
+	            views: {
+	                // the games template (relatively named)
+	                '': { templateUrl: 'views/games.html' },
+	                //the navigator
+	                'navColumn@games': {
+	                    templateUrl: 'views/navigatorMainView.html',
+	                    controller: 'NavigatorController'
+	                }
+	            }
+	        })
         // CENTRAL STATE ========================================
-            .state('central', {
-                url: '/central',
-                views: {
-                    // the robotControl template (relatively named)
-                    '': { templateUrl: 'views/central.html' },
-                    //the navigator
-                    'navColumn@central': {
-                        templateUrl: 'views/navigatorMainView.html',
-                        controller: 'NavigatorController'
-                    },
-                    'leftControlColumn@central': {
-                        templateUrl: 'views/robotControlViews/robotControl_MotionControl.html',
-                    },
-                    'rightControlColumn@central': {
-                        templateUrl: 'views/robotControlViews/robotControl_RobotStatus.html',
-                        controller: 'RobotStatusController'
-                    }
-
-                }
-            })
+	        .state('central', {
+	            url: '/central',
+	            views: {
+	                // the central template (relatively named)
+	                '': { templateUrl: 'views/central.html' },
+	                //the navigator
+	                'navColumn@central': {
+	                    templateUrl: 'views/navigatorMainView.html',
+	                    controller: 'NavigatorController'
+	                }
+	            }
+	        })
 
         // DROIDWARS STATE ========================================
             .state('droidWars', {

@@ -1,54 +1,94 @@
 ﻿angular.module('driodCommand')
-.controller('RobotControlController', ['$scope', '$location', '$http', function ($scope, $location, $http) {
+.controller('RobotControlController', ['$scope', '$location', '$http', '$state', function ($scope, $location, $http, $state) {
 
-    $scope.viewName = "robotControl";
+    $scope.viewName = "";
     $scope.getViewName = function () {
         return $scope.viewName;
     }
 
-    $scope.controlSelected = "joystick";
+    $scope.controlSelected = "";
     $scope.getControlSelected = function () {
         return $scope.controlSelected;
     }
-
-    $scope.isControlSelected = function (controlType) {
-        return $location.path().indexOf(viewLocation) > -1;
-        //return $scope.getControlSelected() === controlType;
+    $scope.setControlSelected = function (newControl) {
+        $scope.controlSelected = newControl;
     }
 
-    $scope.clickTop = function () {
+    $scope.navigateBetweenControls = function (newControl) {
+        $scope.setControlSelected(newControl);
+        $state.go('robotControl' + newControl);
+    }
+
+    $scope.isControlSelected = function (controlType) {
+        //return $location.path().indexOf(viewLocation) > -1;
+        return $scope.getControlSelected() === controlType;
+    }
+
+    /*Joystick Specific Methods*/
+    $scope.clickJoystickTop = function () {
         return "Top";
     }
 
-    $scope.clickLeft = function () {
+    $scope.clickJoystickLeft = function () {
         return "Left";
     }
 
-    $scope.clickRight = function () {
+    $scope.clickJoystickRight = function () {
         return "Right";
     }
 
-    $scope.clickBottom = function () {
+    $scope.clickJoytickBottom = function () {
         return "Bottom";
     }
+    //
 
+    /*Differential Specific Methods*/
+    $scope.clickDifferentialLeftForward = function () {
+        alert("clickDifferentialLeftForward");
+    }
 
-    /*Command Methods*/
+    $scope.clickDifferentialLeftReverse = function () {
+        alert("clickDifferentialLeftReverse");
+    }
+
+    $scope.clickDifferentialRightReverse = function () {
+        alert("clickDifferentialRightReverse");
+    }
+
+    $scope.clickDifferentialRightForward = function () {
+        alert("clickDifferentialRightForward");
+    }
+
+    //
+
+    /*Motion Specific Methods*/
+
+    //
+
+    /*Robot Command Methods*/
     $scope.clickMoreCommands = function () {
-        return "More";
+        alert("More");
     }
 
     $scope.clickspinCommand = function () {
-        return "Spin";
+        alert("Spin");
     }
 
     $scope.clickWaggleCommand = function () {
-        return "Waggle";
+        alert("Waggle");
     }
 
     $scope.clickShootCommand = function () {
-        return "Shoot";
+        alert("Shoot");
     }
 
+    $scope.clickRecoilCommand = function () {
+        alert("Recoil");
+    }
+
+    $scope.clickDanceCommand = function () {
+        alert("Dance");
+    }
+    //
 
 }]);
