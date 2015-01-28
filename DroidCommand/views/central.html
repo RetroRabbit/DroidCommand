@@ -2,8 +2,12 @@
 
     <div class="row fill">
         <div class="col-xs-10 fill">
-            <h1> Central</h1>
-            <p>This page demonstrates <span class="text-danger">nested</span> views.</p>  
+            <div class="row fill">
+                <div ui-view="leftControlColumn" class="col-xs-6 fill odysseyBackground">
+                </div>
+                <div ui-view="rightControlColumn"  class="col-xs-6 fill noRightPadding">
+                </div>
+            </div>          
         </div>
 
         <!-- Navigator View -->

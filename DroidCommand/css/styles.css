@@ -224,6 +224,37 @@ html, body {
     background-image: url(../img/JoystickControlBottomArrow.png);
 }
 
+.imgDifferentialForward
+{
+    background-image: url(../img/DifferentialControlForwardArrow.png);
+}
+
+.imgDifferentialReverse
+{
+    background-image: url(../img/DifferentialControlReverseArrow.png);
+}
+
+.imgMotionTablet
+{
+    background-image: url(../img/tablet.png);
+}
+
+.imgMotionLeft
+{
+    background-image: url(../img/motionLeft.png);
+}
+
+.imgMotionRight
+{
+    background-image: url(../img/motionRight.png);
+}
+
+.imgMotionForwardReverse
+{
+    background-image: url(../img/motionForwardReverse.png);
+}
+
+
 .controlShootCommand
 {
     background-image: url(../img/controlsShootCommand.png);
@@ -243,6 +274,17 @@ html, body {
 {
     background-image: url(../img/controlsMoreCommand.png);
 }
+
+.controlRecoilCommand
+{
+    background-image: url(../img/controlsRecoilCommand.png);
+}
+
+.controlDanceCommand
+{
+    background-image: url(../img/controlsDanceCommand.png);
+}
+
 
 /*============================================*/
 /* Status View*/

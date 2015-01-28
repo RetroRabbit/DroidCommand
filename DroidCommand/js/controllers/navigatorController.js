@@ -21,8 +21,9 @@
     }
 
     //shows the selected view in the nave bar
-    $scope.isActive = function (viewLocation) { 
-        return viewLocation === $location.path();
+    $scope.isActive = function (viewLocation) {
+        return $location.path().indexOf(viewLocation) > -1;
+        //return viewLocation === $location.path();
     };
     $scope.isNotActive = function (viewLocation) {
         return !(viewLocation === $location.path());

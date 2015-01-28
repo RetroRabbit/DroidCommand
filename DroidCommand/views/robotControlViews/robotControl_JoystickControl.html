@@ -1,13 +1,20 @@
 ﻿<div id="joystickControl"  class="fill">
     <div id="controlSelectionRow" class="row "  style="height: 20%;background-color: #85CFE5; ">
         <div class=" col-xs-4 fill">
-            <div id="controlMenuJoystick" ng-class="{ imgControlsMenuJoystick: isControlSelected('joystick'), imgControlsMenuJoystickUnselected: !isControlSelected('joystick'), imgControlsMenu : true}"></div>
-        </div>
+             <a ui-sref-active="active" ui-sref="robotControl"> 
+                <div id="controlMenuJoystick" ng-class="{ imgControlsMenuJoystick: isControlSelected('joystick'), imgControlsMenuJoystickUnselected: !isControlSelected('joystick'), imgControlsMenu : true}"></div>
+            </a>
+            </div>
         <div class=" col-xs-4 fill">
-            <div id="controlMenuDifferential" ng-class="{ imgControlsMenuDifferential: isControlSelected('differential'), imgControlsMenuDifferentialUnselected: !isControlSelected('differential'), imgControlsMenu : true}"></div>
+             <a ui-sref-active="active" ui-sref="robotControl.differentialControl"> 
+                <div id="controlMenuDifferential" ng-class="{ imgControlsMenuDifferential: isControlSelected('differential'), imgControlsMenuDifferentialUnselected: !isControlSelected('differential'), imgControlsMenu : true}"></div>
+            </a>
         </div>
+
         <div class=" col-xs-4 fill">
-            <div id="controlMenuaMotion" ng-class="{ imgControlsMenuMotion: isControlSelected('motion'), imgControlsMenuMotionUnselected: !isControlSelected('motion'), imgControlsMenu : true}"></div>
+            <a ui-sref-active="active" ui-sref="robotControl.motionControl"> 
+                <div id="controlMenuaMotion" ng-class="{ imgControlsMenuMotion: isControlSelected('motion'), imgControlsMenuMotionUnselected: !isControlSelected('motion'), imgControlsMenu : true}"></div>
+            </a>
         </div>
     </div>
 

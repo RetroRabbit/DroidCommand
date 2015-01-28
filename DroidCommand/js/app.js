@@ -29,8 +29,7 @@
                         controller: 'NavigatorController'
                     },
                     'leftControlColumn@robotControl': {
-                        templateUrl: 'views/robotControlViews/robotControl_JoystickControl.html',
-                        controller: 'JoystickController'
+                        templateUrl: 'views/robotControlViews/robotControl_JoystickControl.html'
                     },
                     'rightControlColumn@robotControl': {
                         templateUrl: 'views/robotControlViews/robotControl_RobotStatus.html',
@@ -39,32 +38,76 @@
 
                 }
             })
+
+            .state('robotControl.differentialControl', {
+                url: '/differentialControl',
+                views: {
+                    'leftControlColumn@robotControl': {
+                        templateUrl: 'views/robotControlViews/robotControl_DifferentialControlLeft.html',
+                    },
+                    'navColumn@robotControl': {
+                    templateUrl: 'views/robotControlViews/robotControl_DifferentialControlRight.html',
+                    }
+                }
+            })
+
+            .state('robotControl.motionControl', {
+                url: '/motionControl',
+                views: {
+                    'leftControlColumn@robotControl': {
+                        templateUrl: 'views/robotControlViews/robotControl_MotionControl.html',
+                    },
+                    //the navigator
+                    'navColumn@robotControl': {
+                        templateUrl: 'views/navigatorMainView.html',
+                        controller: 'NavigatorController'
+                    },
+                }
+            })
         // GAMES STATE ========================================
             .state('games', {
                 url: '/games',
                 views: {
-                    // the games template (relatively named)
+                    // the robotControl template (relatively named)
                     '': { templateUrl: 'views/games.html' },
                     //the navigator
                     'navColumn@games': {
-                        templateUrl: 'views/navigatorMainView.html',
-                        controller: 'NavigatorController'
+                        templateUrl: 'views/robotControlViews/robotControl_DifferentialControlRight.html',
+                    },
+                    'leftControlColumn@games': {
+                            templateUrl: 'views/robotControlViews/robotControl_DifferentialControlLeft.html',
+                    },
+                    'rightControlColumn@games': {
+                        templateUrl: 'views/robotControlViews/robotControl_RobotStatus.html',
+                        controller: 'RobotStatusController'
                     }
+
                 }
             })
+
+
         // CENTRAL STATE ========================================
             .state('central', {
                 url: '/central',
                 views: {
-                    // the central template (relatively named)
+                    // the robotControl template (relatively named)
                     '': { templateUrl: 'views/central.html' },
-                   //the navigator
+                    //the navigator
                     'navColumn@central': {
                         templateUrl: 'views/navigatorMainView.html',
                         controller: 'NavigatorController'
+                    },
+                    'leftControlColumn@central': {
+                        templateUrl: 'views/robotControlViews/robotControl_MotionControl.html',
+                    },
+                    'rightControlColumn@central': {
+                        templateUrl: 'views/robotControlViews/robotControl_RobotStatus.html',
+                        controller: 'RobotStatusController'
                     }
+
                 }
             })
+
         // DROIDWARS STATE ========================================
             .state('droidWars', {
                 url: '/droidWars',
