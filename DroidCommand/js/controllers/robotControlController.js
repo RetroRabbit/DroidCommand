@@ -1,5 +1,5 @@
 ﻿angular.module('driodCommand')
-.controller('RobotControlController', ['$scope', '$location', '$http', '$state', function ($scope, $location, $http, $state) {
+.controller('RobotControlController', ['$scope', '$location', '$http', '$state', function ($scope, $location, $http, $state, bluetoothService) {
 
     $scope.viewName = "";
     $scope.getViewName = function () {

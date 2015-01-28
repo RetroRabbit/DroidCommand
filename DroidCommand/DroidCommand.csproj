@@ -73,6 +73,8 @@
     <Content Include="js\ext\angular-route.min.js" />
     <Content Include="js\ext\angular.min.js" />
     <Content Include="js\ext\jquery-1.11.0.min.js" />
+    <Content Include="js\service\bluetoothService.js" />
+    <Content Include="js\service\droidService.js" />
     <Content Include="views\bluetoothSelection.html" />
     <Content Include="views\central.html" />
     <Content Include="views\droidWars.html" />
