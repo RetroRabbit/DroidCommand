@@ -68,7 +68,7 @@
                 url: '/program',
                 views: {
                     'leftControlColumn@robotControl': {
-                        templateUrl: 'views/robotControlViews/robotControl_programRobot.html'
+                        templateUrl: 'views/robotControlViews/robotControl_ProgramRobot.html'
                     }
                 }
             })

@@ -22,7 +22,7 @@
         Img: 'img/robot.png',
         Mode: 'Autonomous',
         Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-        Battery: 50,
+        Battery: 20,
         EmotionLevel: 80
     },
     {
@@ -31,7 +31,7 @@
         Img: 'img/robot.png',
         Mode: 'Autonomous',
         Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-        Battery: 40,
+        Battery: 60,
         EmotionLevel: 20
     },
     {
@@ -40,7 +40,7 @@
         Img: 'img/robot.png',
         Mode: 'Autonomous',
         Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-        Battery: 60,
+        Battery: 95,
         EmotionLevel: 60
     }];
 
