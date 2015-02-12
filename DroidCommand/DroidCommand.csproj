@@ -75,11 +75,12 @@
     <Content Include="js\ext\jquery-1.11.0.min.js" />
     <Content Include="js\service\bluetoothService.js" />
     <Content Include="js\service\droidService.js" />
-    <Content Include="views\bluetoothSelection.html" />
+    <Content Include="views\OdysseyViews\Main_bluetoothSelection.html" />
     <Content Include="views\central.html" />
     <Content Include="views\droidWars.html" />
     <Content Include="views\games.html" />
     <Content Include="views\navigatorMainView.html" />
+    <Content Include="views\OdysseyViews\Main_Odyssey.html" />
     <Content Include="views\robotControl.html" />
     <Content Include="views\main.html" />
     <Content Include="views\robotControlViews\robotControl_DifferentialControlLeft.html" />

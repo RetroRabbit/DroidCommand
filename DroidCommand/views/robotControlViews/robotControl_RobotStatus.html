@@ -41,7 +41,10 @@
 
         </div>
         <div class ="col-xs-3 fill">
-            <div ui-slider="{orientation: 'vertical', range: 'min'}" min="0" max="50" ng-model="demoVals.sliderExample1"></div>
+            <div ui-slider="{orientation: 'vertical'}" min="0" max="50" ng-model="demoVals.sliderExample1" class="ng-valid ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all ng-dirty" aria-disabled="false">
+                <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 22%;"> 
+                </a>
+            </div>
         </div>
     </div>
 
@@ -50,7 +53,7 @@
             <div data-ng-click="selectRobotLeft()" class="imgSelectRobotLeft imgStatus"></div>
         </div>
         <div class ="col-xs-8 fill robotNameDisplayTag">
-            {{ activeDroid.Name }}
+            {{ getSelectedDroid().Name }}
         </div>
         <div class ="col-xs-2 fill">
             <div  data-ng-click="selectRobotRight()" class="imgSelectRobotRight imgStatus"></div>

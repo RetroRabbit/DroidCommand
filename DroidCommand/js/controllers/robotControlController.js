@@ -1,5 +1,5 @@
 ﻿angular.module('driodCommand')
-.controller('RobotControlController', ['$scope', '$location', '$http', '$state', function ($scope, $location, $http, $state, bluetoothService) {
+.controller('RobotControlController', ['$scope', '$location', '$http', '$state', 'bluetoothService', function ($scope, $location, $http, $state, bluetoothService) {
 
     $scope.viewName = "";
     $scope.getViewName = function () {
@@ -26,37 +26,39 @@
 
     /*Joystick Specific Methods*/
     $scope.clickJoystickTop = function () {
-        return "Top";
+        bluetoothService.sendMessage("Top");
     }
 
     $scope.clickJoystickLeft = function () {
-        return "Left";
+        bluetoothService.sendMessage("Left");
     }
 
     $scope.clickJoystickRight = function () {
-        return "Right";
+        bluetoothService.sendMessage("Right");
     }
 
     $scope.clickJoytickBottom = function () {
-        return "Bottom";
+        bluetoothService.sendMessage("Bottom");
     }
     //
 
     /*Differential Specific Methods*/
     $scope.clickDifferentialLeftForward = function () {
-        alert("clickDifferentialLeftForward");
+        bluetoothService.sendMessage("clickDifferentialLeftForward");
     }
 
     $scope.clickDifferentialLeftReverse = function () {
-        alert("clickDifferentialLeftReverse");
+        bluetoothService.sendMessage("clickDifferentialLeftReverse");
     }
 
     $scope.clickDifferentialRightReverse = function () {
-        alert("clickDifferentialRightReverse");
+
+        bluetoothService.sendMessage("clickDifferentialRightReverse");
     }
 
     $scope.clickDifferentialRightForward = function () {
-        alert("clickDifferentialRightForward");
+
+        bluetoothService.sendMessage("clickDifferentialRightForward");
     }
 
     //
@@ -67,27 +69,33 @@
 
     /*Robot Command Methods*/
     $scope.clickMoreCommands = function () {
-        alert("More");
+
+        bluetoothService.sendMessage("more");
     }
 
     $scope.clickspinCommand = function () {
-        alert("Spin");
+
+        bluetoothService.sendMessage("Spin");
     }
 
     $scope.clickWaggleCommand = function () {
-        alert("Waggle");
+
+        bluetoothService.sendMessage("Waggle");
     }
 
     $scope.clickShootCommand = function () {
-        alert("Shoot");
+
+        bluetoothService.sendMessage("Shoot");
     }
 
     $scope.clickRecoilCommand = function () {
-        alert("Recoil");
+
+        bluetoothService.sendMessage("Recoil");
     }
 
     $scope.clickDanceCommand = function () {
-        alert("Dance");
+
+        bluetoothService.sendMessage("Dance");
     }
     //
 

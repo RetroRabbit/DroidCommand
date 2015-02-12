@@ -1,4 +1,4 @@
-﻿angular.module('driodCommand', ['ui.router'])
+﻿angular.module('driodCommand', ['ui.router', 'ui.slider'])
     .config(function($stateProvider, $urlRouterProvider) {
     
         $urlRouterProvider.otherwise('/odyssey');
@@ -13,9 +13,26 @@
                 'navColumn@odyssey': {
                     templateUrl: 'views/navigatorMainView.html',
                     controller: 'NavigatorController'
-                }
+                },
+                'OdysseyColumn@odyssey': {
+                    templateUrl: 'views/OdysseyViews/Main_Odyssey.html'
+                },
             }
         })
+
+            .state('odyssey.bluetoothSelection', {
+                url: '/bluetoothSelection',
+                views: {
+                    'OdysseyColumn@odyssey': {
+                        templateUrl: 'views/OdysseyViews/Main_bluetoothSelection.html',
+                    },
+                    //the navigator
+                    'navColumn@robotControl': {
+                        templateUrl: 'views/navigatorMainView.html',
+                        controller: 'NavigatorController'
+                    },
+                }
+            })
         
         // ROBOTCONTROL STATE ========================================
             .state('robotControl', {

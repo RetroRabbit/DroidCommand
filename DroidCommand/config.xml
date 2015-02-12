@@ -64,7 +64,7 @@
   
   <!-- 3rd party plugins-->      
   <gap:plugin name="com.megster.cordova.bluetoothserial" version="0.3.3" />
-  
+  <gap:plugin name="com.evothings.ble" version="1.0.0" />
   
     <access origin="*"/>
   
