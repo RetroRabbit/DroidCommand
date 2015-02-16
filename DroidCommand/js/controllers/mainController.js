@@ -19,9 +19,12 @@
         bluetoothService.CloseConnectionToDevice();
     }
 
-    $scope.getDeviceList = function () {
-        if(bluetoothService.deviceList.length == 0)
+    //starts scanning for devices
+    $scope.scanForDevices = function () {
         bluetoothService.DetectDevices();
+    }
+
+    $scope.getDeviceList = function () {
 
         return bluetoothService.deviceList;
     }

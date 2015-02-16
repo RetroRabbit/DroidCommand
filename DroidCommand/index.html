@@ -11,13 +11,14 @@
     <link rel="stylesheet" type="text/css" href="css/slider.css" /> 
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
 </head>
-<body data-ng-app="driodCommand" style="overflow:hidden">
+<body  style="overflow:hidden"  onload="onLoad()">
 
     <div ui-view class="fill">
 
     </div>
-    <!--<script src="cordova.js"></script>-->
+    <script src="cordova.js"></script>
 
     <!-- include script files after DOM has been loaded -->
     <script type="text/javascript" src="js/ext/jquery-1.11.0.min.js" ></script>
@@ -43,6 +44,7 @@
 
     <script type="text/javascript" src="js/service/droidService.js"></script>
     <script type="text/javascript" src="js/service/bluetoothService.js"></script>
+
 
 </body>
 </html>

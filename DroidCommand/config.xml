@@ -62,9 +62,10 @@
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
   
-  <!-- 3rd party plugins-->      
-  <gap:plugin name="com.megster.cordova.bluetoothserial" version="0.3.3" />
+  <!-- 3rd party plugins-->
   <gap:plugin name="com.evothings.ble" version="1.0.0" />
+  <!--<gap:plugin name="com.megster.cordova.bluetoothserial" version="0.3.3" />-->
+
   
     <access origin="*"/>
   

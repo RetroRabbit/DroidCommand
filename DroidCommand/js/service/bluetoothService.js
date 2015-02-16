@@ -3,15 +3,17 @@
 
     this.deviceList = [];
     this.ConnectedDeviceInfo = null;
-    this.feedback = "";
+    this.feedback = "feedback";
 
     this.DetectDevices = function()
     {
         //start scanning for devices
+        this.feedback = 'started scanning';
+        var deviceListTemp = this.deviceList;
         evothings.ble.startScan(
 	        function (device) {
 	            this.feedback = 'BLE startScan found device named: ' + device.name;
-	            this.deviceList.push(device);
+	            deviceListTemp.push(device);
 
 	        },
 	        function (errorCode) {
@@ -19,12 +21,14 @@
 	        }
         );
 
+        setTimeout(this.StopDetectingDevices, 60000);
         
     }
 
     //this stops scanning for devices
     this.StopDetectingDevices = function () {
         evothings.ble.stopScan();
+        this.feedback = 'stopped scanning';
     }
 
     //connects to the selected bluetooth device
@@ -55,6 +59,23 @@
             this.feedback = 'Connection Closed';
         }
     }
+
+    //gets the signal strength - can determine distance
+    this.GetRssi = function () {
+
+        evothings.ble.rssi(
+            this.ConnectedDeviceInfo.deviceHandle,
+            function (rssi) {
+                this.feedback = 'BLE rssi: ' + rssi;
+            },
+            function (errorCode) {
+                this.feedback = 'BLE rssi error: ' + errorCode;
+            }
+        );
+
+    }
+
+
 
     //sends a command to the bluetooth device if connected
     this.sendMessage = function(message) {

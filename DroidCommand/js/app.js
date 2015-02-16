@@ -131,3 +131,17 @@
             })
 
     });
+
+
+
+
+function onLoad() {
+
+    //angular.element(document).ready(function () {
+    //    angular.bootstrap(document, ['driodCommand']);
+    //});
+
+    document.addEventListener('deviceready', function onDeviceReady() {
+        angular.bootstrap(document, ['driodCommand']);
+    }, false);
+}
