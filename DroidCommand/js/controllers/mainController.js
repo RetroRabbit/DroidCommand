@@ -12,11 +12,11 @@
     }
 
     $scope.connect = function (device) {
-        bluetoothService.ConnectToDevice(device);
+        bluetoothService.connect(device.address);
     }
 
     $scope.disconnect = function () {
-        bluetoothService.CloseConnectionToDevice();
+        bluetoothService.disconnect();
     }
 
     //starts scanning for devices
@@ -26,11 +26,11 @@
 
     $scope.getDeviceList = function () {
 
-        return bluetoothService.deviceList;
+        return bluetoothService.getDevicelist();
     }
 
     $scope.getFeedback = function () {
-        return bluetoothService.feedback;
+        return bluetoothService.getFeedback();
     }
 
 

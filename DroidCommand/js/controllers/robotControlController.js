@@ -26,19 +26,19 @@
 
     /*Joystick Specific Methods*/
     $scope.clickJoystickTop = function () {
-        bluetoothService.sendMessage("Top");
+        bluetoothService.sendMessage("up");
     }
 
     $scope.clickJoystickLeft = function () {
-        bluetoothService.sendMessage("Left");
+        bluetoothService.sendMessage("left");
     }
 
     $scope.clickJoystickRight = function () {
-        bluetoothService.sendMessage("Right");
+        bluetoothService.sendMessage("right");
     }
 
     $scope.clickJoytickBottom = function () {
-        bluetoothService.sendMessage("Bottom");
+        bluetoothService.sendMessage("down");
     }
     //
 
