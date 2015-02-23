@@ -106,25 +106,26 @@
         disconnectCounter = 0;
 
         //get the number of calls to be made
-        for (var i = 0; i < ConnectedDeviceInfo.services.length; i++) {
-            disconnectCounter += ConnectedDeviceInfo.services[i].characteristics.length;
-        }
+        //for (var i = 0; i < ConnectedDeviceInfo.services.length; i++) {
+        //    disconnectCounter += ConnectedDeviceInfo.services[i].characteristics.length;
+        //}
 
         //iterate through each characteritic and write the message to it //todo specify correct service and characteristic
-        for (var i = 0; i < ConnectedDeviceInfo.services.length; i++) {
+        //for (var i = 0; i < ConnectedDeviceInfo.services.length; i++) {
 
-            for (var j = 0; j < ConnectedDeviceInfo.services[i].characteristics.length; j++) {
-                if (ConnectedDeviceInfo.services[i].characteristics[j].properties.write == true)
-                {
-                    write(ConnectedDeviceInfo.address, ConnectedDeviceInfo.services[i].serviceUuid, ConnectedDeviceInfo.services[i].characteristics[j].characteristicUuid, bluetoothle.stringToBytes(message));
-                }
-                else
-                {
-                    disconnectCounter--;
-                }
-            }
+        //    for (var j = 0; j < ConnectedDeviceInfo.services[i].characteristics.length; j++) {
+        //        if (ConnectedDeviceInfo.services[i].characteristics[j].properties.write == true)
+        //        {
+        //            write(ConnectedDeviceInfo.address, ConnectedDeviceInfo.services[i].serviceUuid, ConnectedDeviceInfo.services[i].characteristics[j].characteristicUuid, bluetoothle.stringToBytes(message));
+        //        }
+        //        else
+        //        {
+        //            disconnectCounter--;
+        //        }
+        //    }
 
-        }
+        //}
+        write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(bluetoothle.stringToBytes(message.message)));
     }
 
     // initialises bluetoothle must happen
@@ -514,7 +515,7 @@
     //Write a particular service's characteristic.
     function write(address, serviceUuid, characteristicUuid, value)
     {
-        var paramsObj = { address: address, serviceUuid: serviceUuid, characteristicUuid: characteristicUuid, value: value, "type": "noResponse" };
+        var paramsObj = { address: address, serviceUuid: serviceUuid, characteristicUuid: characteristicUuid, value: value, "type": "response" };
 	
         console.log("Write : " + JSON.stringify(paramsObj));
 	
@@ -536,7 +537,7 @@
             console.log("Unexpected Write Status");
         }
 
-        var v = bluetoothle.bytesToString(obj.value);
+        console.log(bluetoothle.bytesToString(bluetoothle.encodedStringToBytes(obj.value)))
 
         //decrements a value and then disconnects if it is zero
         coundownToDisconnect(obj);
@@ -546,7 +547,7 @@
     {
         console.log("Write Error : " + JSON.stringify(obj));
 
-        var v = bluetoothle.bytesToString(obj.value);
+        console.log(bluetoothle.bytesToString(bluetoothle.encodedStringToBytes(obj.value)))
 
 
         //decrements a value and then disconnects if it is zero

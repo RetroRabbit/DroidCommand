@@ -25,20 +25,22 @@
     }
 
     /*Joystick Specific Methods*/
-    $scope.clickJoystickTop = function () {
-        bluetoothService.sendMessage("up");
-    }
 
     $scope.clickJoystickLeft = function () {
-        bluetoothService.sendMessage("left");
+        bluetoothService.sendMessage({ "message": "left", "serviceUuid": "1800", "characteristicUuid": "2a00" });
     }
 
     $scope.clickJoystickRight = function () {
-        bluetoothService.sendMessage("right");
+        bluetoothService.sendMessage({ "message": "right", "serviceUuid": "1800", "characteristicUuid": "2a00" });
+    }
+    //({ "message": "left", "serviceUuid": "1800", "characteristicUuid": "2a00" });
+    // "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" }
+    $scope.clickJoystickTop = function () {
+        bluetoothService.sendMessage({ "message": "up", "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" })
     }
 
     $scope.clickJoytickBottom = function () {
-        bluetoothService.sendMessage("down");
+        bluetoothService.sendMessage({ "message": "down", "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" })
     }
     //
 
