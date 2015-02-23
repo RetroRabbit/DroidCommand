@@ -52,6 +52,7 @@
     function sendMessage(message) {
 
         //write(address, serviceUuid, characteristicUuid, value)
+        /*
         if (ConnectedDeviceInfo != null) {
 
             reconnectingCounter = 0;
@@ -72,6 +73,39 @@
                 }
 
             }, reconnectError);
+        }
+        */
+        if (ConnectedDeviceInfo != null) {
+
+            //try to send message without reconnecting the whole time
+
+            bluetoothle.isConnected(function (obj) {
+                //if connected call write
+                if (obj.isConnected) {
+                    write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(bluetoothle.stringToBytes(message.message)));
+                }
+                else {
+
+                    reconnectingCounter = 0;
+
+                    reconnect(ConnectedDeviceInfo.address, function (obj) {
+
+                        console.log("Reconnect Success : " + JSON.stringify(obj));
+                        //connection success
+                        if (obj.status == "connected") {
+                            if (reconnectingCounter == 0) {
+                                reconnectingCounter++;
+                                writeToAllCharacteristics(message);
+                            }
+                        }
+                        else if (obj.status == "connecting") {
+                            reconnectWaitingCounter = 0;
+                            waitForReconnection(message);
+                        }
+
+                    }, reconnectError);
+                }
+            }, { address: ConnectedDeviceInfo.address });
         }
     }
 
@@ -540,7 +574,7 @@
         console.log(bluetoothle.bytesToString(bluetoothle.encodedStringToBytes(obj.value)))
 
         //decrements a value and then disconnects if it is zero
-        coundownToDisconnect(obj);
+        //coundownToDisconnect(obj);
     }
 
     function writeError(obj)
@@ -551,7 +585,7 @@
 
 
         //decrements a value and then disconnects if it is zero
-        coundownToDisconnect(obj);
+        //coundownToDisconnect(obj);
     }
 
     //decrements a value and then disconnects if it is zero

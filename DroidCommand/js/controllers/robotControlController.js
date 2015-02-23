@@ -27,11 +27,11 @@
     /*Joystick Specific Methods*/
 
     $scope.clickJoystickLeft = function () {
-        bluetoothService.sendMessage({ "message": "left", "serviceUuid": "1800", "characteristicUuid": "2a00" });
+        bluetoothService.sendMessage({ "message": "left", "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" });
     }
 
     $scope.clickJoystickRight = function () {
-        bluetoothService.sendMessage({ "message": "right", "serviceUuid": "1800", "characteristicUuid": "2a00" });
+        bluetoothService.sendMessage({ "message": "right", "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" });
     }
     //({ "message": "left", "serviceUuid": "1800", "characteristicUuid": "2a00" });
     // "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" }
