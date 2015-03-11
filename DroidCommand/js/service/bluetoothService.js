@@ -49,32 +49,47 @@
         initialize(startScan, initializeError);   
     }
 
-    function sendMessage(message) {
+    function sendCommand(message) {
 
-        //write(address, serviceUuid, characteristicUuid, value)
-        /*
+        //uint8Array = new Uint8Array(message.commandDataView.buffer, 0, commandDataView.buffer.byteLength); 
+
         if (ConnectedDeviceInfo != null) {
 
-            reconnectingCounter = 0;
+            //try to send message without reconnecting the whole time
 
-            reconnect(ConnectedDeviceInfo.address, function (obj) {
-
-                console.log("Reconnect Success : " + JSON.stringify(obj));
-                //connection success
-                if (obj.status == "connected") {
-                    if (reconnectingCounter == 0) {
-                        reconnectingCounter++;
-                        writeToAllCharacteristics(message);
-                    }
+            bluetoothle.isConnected(function (obj) {
+                //if connected call write
+                if (obj.isConnected) {
+                    write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, commandDataView.buffer.byteLength)));
                 }
-                else if (obj.status == "connecting") {
-                    reconnectWaitingCounter = 0;
-                    waitForReconnection(message);
-                }
+                else {
 
-            }, reconnectError);
+                    reconnectingCounter = 0;
+
+                    reconnect(ConnectedDeviceInfo.address, function (obj) {
+
+                        console.log("Reconnect Success : " + JSON.stringify(obj));
+                        //connection success
+                        if (obj.status == "connected") {
+                            if (reconnectingCounter == 0) {
+                                reconnectingCounter++;
+                                write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, commandDataView.buffer.byteLength)));
+                            }
+                        }
+                        else if (obj.status == "connecting") {
+                            reconnectWaitingCounter = 0;
+                            waitForReconnection(message);
+                        }
+
+                    }, reconnectError);
+                }
+            }, { address: ConnectedDeviceInfo.address });
         }
-        */
+
+    }
+
+    function sendMessage(message) {
+
         if (ConnectedDeviceInfo != null) {
 
             //try to send message without reconnecting the whole time
