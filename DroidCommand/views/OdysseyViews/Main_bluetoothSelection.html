@@ -1,0 +1,14 @@
+﻿<div >
+    <h2 style="margin-right: auto;margin-left: auto;display: block;width: 350px;">Select bluetooth device</h2>
+    
+    <div>
+        <div style="width:100px;height:30px;border-radius:10px;color:white;background-color:navy;text-align:center;" data-ng-click="scanForDevices()">Scan</div>
+    </div>
+
+    <ul style="padding-right: 40px;">
+        <li data-ng-repeat="device in getDeviceList()" style="display:block;padding:10px;border:1px solid black;">
+            <div data-ng-click="connect(device)">{{device.name}}</div>
+        </li>
+    </ul>
+    <div style="display:block">{{getFeedback()}}</div>    
+</div>

@@ -1,0 +1,59 @@
+﻿<div id="odysseyMap" class="fill odysseyBackground">
+            <div id="odysseytitle" class="row"  style="height:10%;">
+                <div id="Div2" class=" scol-xs-12">
+                    <h4>Getting Started On Your Droid Odyssey</h4>
+                </div>
+            </div>
+            <div id="odysseyTopItems" class="row"  style="height:40%;">
+                <div id="item_pair" data-ng-click="navigate('pair')" class="odysseyRouteItems col-xs-3" >
+                    <div class="odysseyRouteItemText"> Pair the robots</div>
+                    <div id="robotPairImage" ng-class="{ imgBluetooth: true ,imgOdyssey: true}"></div>  
+                    
+                </div>
+                <div id="item_drive" data-ng-click="navigate('drive')" class="odysseyRouteItems col-xs-3">
+                    <div class="odysseyRouteItemText"> Drive the robots</div>
+                      <div id="robotDriveImage" ng-class="{ imgJoyStick: true ,imgOdyssey: true}"></div>  
+                      
+                </div>
+                <div id="item_roam" data-ng-click="navigate('roam')" class="odysseyRouteItems col-xs-3">
+                    <div class="odysseyRouteItemText"> let the robot roam about</div>
+                      <div id="robotRoamImage" ng-class="{ imgRobotRoam: true ,imgOdyssey: true}"></div>  
+                      
+                </div>
+                <div id="item_play" data-ng-click="navigate('game')" class="odysseyRouteItems col-xs-3">
+                    <div class="odysseyRouteItemText"> play a game with the robots</div>
+                      <div id="robotGameImage" ng-class="{ imgRobotGames: true ,imgOdyssey: true}"></div>  
+                      
+                </div>
+
+            </div>
+
+            <div id="odysseyMiddleItems" class="row"  style="height:10%;">
+                <div id="Div1" class="odysseyRouteItems col-xs-11 noRightPadding">
+                     <div id="Div5" class="odysseyRouteBackground"></div>
+                </div>
+                <div id="Div3" class="odysseyRouteItems col-xs-1 noLeftOrRightPadding">
+                    <div class="imgOdysseyRouteBackgroundArrow"></div>
+                </div>
+            </div>
+
+            <div id="odysseyBottomItems"  class="row"  style="height:40%;">
+                <div id="item_configure" data-ng-click="navigate('configure')" class="odysseyRouteItems col-xs-3">
+                      <div id="robotSettingImage" ng-class="{ imgSettings: true ,imgOdyssey: true}"></div>                        
+                     <div class="odysseyRouteItemText"> Configure the robots </div>
+                </div>
+                <div id="item_program" data-ng-click="navigate('program')" class="odysseyRouteItems col-xs-3">
+                    <div id="robotProgramImage" ng-class="{ imgProgram: true ,imgOdyssey: true}"></div>  
+                     <div class="odysseyRouteItemText">  Program a robot </div>
+                </div>
+                <div id="item_multiple" data-ng-click="navigate('multiple')" class="odysseyRouteItems col-xs-3">
+                    <div id="robotMultipleImage"  ng-class="{ imgRobotMultiple: true ,imgOdyssey: true}"></div>  
+                     <div class="odysseyRouteItemText">  controlling mutliple robots</div>
+                </div>
+                <div id="item_more" data-ng-click="navigate('driveModes')" class="odysseyRouteItems col-xs-3">
+                    <div id="robotDriveModesImage"  ng-class="{ imgControl: true ,imgOdyssey: true}"></div>  
+                      <div class="odysseyRouteItemText"> More ways to drive a robot</div>
+                </div>
+            </div>
+
+        </div>
