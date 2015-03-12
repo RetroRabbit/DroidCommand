@@ -1,4 +1,4 @@
-﻿angular.module('driodCommand', ['ui.router', 'ui.slider'])
+﻿angular.module('driodCommand', ['ui.router', 'ui.slider', 'ngTouch'])
     .config(function($stateProvider, $urlRouterProvider) {
     
         $urlRouterProvider.otherwise('/odyssey');

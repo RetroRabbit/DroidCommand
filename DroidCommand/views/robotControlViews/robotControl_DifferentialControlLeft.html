@@ -1,4 +1,4 @@
-﻿<div id="differentialControlLeft"  class="fill">
+﻿<div data-ng-controller="DifferentialControlLeftController" id="differentialControlLeft"  class="fill">
     <div id="controlSelectionRow" class="row "  style="height: 20%;background-color: #85CFE5; ">
         <div class=" col-xs-4 fill">
              <a data-ng-click="navigateBetweenControls('')"> 
@@ -16,48 +16,69 @@
             </a>
         </div>
     </div>
-    <div class="row" style="height:27%">
-        <div class="col-xs-4 fill noLeftOrRightPadding">
-            <div class="imgDifferentialForward imgControls" data-ng-click="clickDifferentialLeftForward()"></div>
-        </div>
-        <div class="col-xs-4 fill ">
-            <div class="controlShootCommand imgControls" style="height:80%" data-ng-click="clickShootCommand()"></div>
-            <div style="height:20%;text-align:center;">shoot</div>
-        </div>
-        <div class="col-xs-4 fill ">
-            <div class="controlWaggleCommand imgControls" style="height:80%" data-ng-click="clickWaggleCommand()"></div>
-            <div style="height:20%;text-align:center;">waggle</div>
-        </div>
-    </div>
-    <div class="row" style="height:26%">
-        <div class="col-xs-4 fill noLeftOrRightPadding ">
-            <div class="fill" style="background-color:white;">
-                <div style="height:33%"></div>
-                <div style="height:33%;font-size: 1em;text-align:center;">LEFT</div>
-                <div style="height:33%"></div>
+    <div class="row" style="height:80%">
+
+        <div id="DifferentialDriveLeft" class=" col-xs-4 fill noLeftOrRightPadding">
+            
+            <div class="row" style="height:33%">
+                <div class="col-xs-12 fill ">
+                    <div class="imgDifferentialForward imgControls" data-ng-click="clickDifferentialLeftForward()"></div>
+                </div>
+            </div>
+
+            <div class="row" style="height:33%">
+               <div class="col-xs-12 fill ">
+                <div class="fill" style="background-color:white;">
+                    <div style="height:33%"></div>
+                    <div style="height:33%;font-size: 1em;text-align:center;">LEFT</div>
+                    <div style="height:33%"></div>
+                </div>
+               </div>
+            </div>
+
+            <div class="row" style="height:33%">
+               <div class="col-xs-12 fill ">
+                <div class="imgDifferentialReverse imgControls"  data-ng-click="clickDifferentialLeftReverse()"></div>
+               </div>
             </div>
         </div>
-        <div class="col-xs-4 fill ">
-            <div class="controlSpinCommand imgControls" style="height:80%" data-ng-click="clickspinCommand()"></div>
-            <div style="height:20%;text-align:center;">spin</div>
-        </div>
-        <div class="col-xs-4 fill ">
-            <div class="controlRecoilCommand imgControls" style="height:80%" data-ng-click="clickRecoilCommand()"></div>
-            <div style="height:20%;text-align:center;">recoil</div>
-        </div>
-    </div>
-    <div class="row" style="height:27%">
-        <div class="col-xs-4 fill noLeftOrRightPadding">
-            <div class="imgDifferentialReverse imgControls"  data-ng-click="clickDifferentialLeftReverse()"></div>
+
+        <div class="col-xs-8 fill noLeftOrRightPadding">
+            <div class="row" style="height:27%">
+
+                <div class="col-xs-6 fill ">
+                    <div class="controlShootCommand imgControls" style="height:80%" data-ng-click="clickShootCommand()"></div>
+                    <div style="height:20%;text-align:center;">shoot</div>
+                </div>
+                <div class="col-xs-6 fill ">
+                    <div class="controlWaggleCommand imgControls" style="height:80%" data-ng-click="clickWaggleCommand()"></div>
+                    <div style="height:20%;text-align:center;">waggle</div>
+                </div>
+            </div>
+
+            <div class="row" style="height:26%">
+                <div class="col-xs-6 fill ">
+                    <div class="controlSpinCommand imgControls" style="height:80%" data-ng-click="clickspinCommand()"></div>
+                    <div style="height:20%;text-align:center;">spin</div>
+                </div>
+                <div class="col-xs-6 fill ">
+                    <div class="controlRecoilCommand imgControls" style="height:80%" data-ng-click="clickRecoilCommand()"></div>
+                    <div style="height:20%;text-align:center;">recoil</div>
+                </div>
+            </div>
+
+            <div class="row" style="height:27%">
+                <div class="col-xs-6 fill ">
+                    <div class="controlDanceCommand imgControls" style="height:80%" data-ng-click="clickDanceCommand()"></div>
+                    <div style="height:20%;text-align:center;">dance</div>
+                </div>
+                <div class="col-xs-6 fill ">
+                    <div class="controlMoreCommand imgControls" style="height:80%" data-ng-click="clickMoreCommands()"></div>
+                    <div style="height:20%;text-align:center;">more</div>
+                </div>
+            </div>
 
         </div>
-        <div class="col-xs-4 fill ">
-            <div class="controlDanceCommand imgControls" style="height:80%" data-ng-click="clickDanceCommand()"></div>
-            <div style="height:20%;text-align:center;">dance</div>
-        </div>
-        <div class="col-xs-4 fill ">
-            <div class="controlMoreCommand imgControls" style="height:80%" data-ng-click="clickMoreCommands()"></div>
-            <div style="height:20%;text-align:center;">more</div>
-        </div>
     </div>
+
 </div>

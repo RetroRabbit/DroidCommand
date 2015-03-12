@@ -29,6 +29,7 @@
 
         DetectDevices: DetectDevices,
         sendMessage: sendMessage,
+        sendCommand: sendCommand,
         initialize: initialize,
         enable: enable,
         disable: disable,

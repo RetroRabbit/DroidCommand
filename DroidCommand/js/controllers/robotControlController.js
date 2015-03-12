@@ -1,5 +1,5 @@
 ﻿angular.module('driodCommand')
-.controller('RobotControlController', ['$scope', '$location', '$http', '$state', 'bluetoothService', function ($scope, $location, $http, $state, bluetoothService) {
+.controller('RobotControlController', ['$scope', '$location', '$http', '$state', 'bluetoothService', '$swipe', function ($scope, $location, $http, $state, bluetoothService, $swipe) {
 
     $scope.viewName = "";
     $scope.getViewName = function () {
@@ -7,8 +7,7 @@
     }
 
     $scope.commandIndex = -1;
-    $cope.incrementCommandIndex()
-    {
+    $scope.incrementCommandIndex = function () {
         $scope.commandIndex++;
         if ($scope.commandIndex > 255) {
             $scope.commandIndex = 0;
@@ -34,6 +33,27 @@
         return $scope.getControlSelected() === controlType;
     }
 
+    //use $swipe service to get swipe evens on the elements
+
+    $swipe.bind(angular.element('#DifferentialDriveRight'), {
+        'start': function (coords) {
+            console.log("start x co-ord: " + coords.x);
+            console.log("start x co-ord: " + coords.y);
+        },
+        'move': function (coords) {
+            console.log("move x co-ord: " + coords.x);
+            console.log("move x co-ord: " + coords.y);
+        },
+        'end': function (coords) {
+            console.log("end x co-ord: " + coords.x);
+            console.log("end x co-ord: " + coords.y);
+        },
+        'cancel': function (coords) {
+            console.log("cancel x co-ord: " + coords.x);
+            console.log("cancel x co-ord: " + coords.y);
+        }
+    },['mouse','touch']);
+
     //sends command to bluetoothservice
     //so I only have to change it in one place
     $scope.sendToBluetoothService = function (commandDataView) {
@@ -41,11 +61,10 @@
         bluetoothService.sendCommand({ "commandDataView": commandDataView, "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" });
     }
 
-
     //movement of the robot
     $scope.MoveCommand = function (speedLeft, speedRight, time) {
 
-        var commandIndex = $cope.incrementCommandIndex();
+        var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
         
         var CommandType = 'M'; // indicator M for move
@@ -73,7 +92,7 @@
     //stops of the robot
     $scope.StopCommand = function (speedLeft, speedRight, time) {
 
-        var commandIndex = $cope.incrementCommandIndex();
+        var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
 
         var CommandType = 'S'; // indicator M for move
@@ -94,10 +113,88 @@
         $scope.sendToBluetoothService(dataView);
     }
 
-    $scope.WaggleCommand(intensity, onTime, repeat, delay)
+    $scope.ShiverCommand = function (intensity, onTime, repeat, delay) {
+
+        var commandIndex = $scope.incrementCommandIndex();
+        var commandBehaviour = 0;
+
+        var CommandType = '????'; // indicator M for move
+
+        //length of the command payload is 6 bytes header is always eight bytes
+        var commandLength = 14; //2 bytes
+
+        //create an array buffer of commandLength bytes
+        //create a dataview for the buffer
+        var dataView = new DataView(new ArrayBuffer(commandLength));
+
+        //header = bytes 0 to 7
+        dataView.setUint8(0, commandIndex);
+        dataView.setUint8(1, commandBehaviour);
+        dataView.setUint16(2, commandLength);
+        dataView.setUint8(7, CommandType);
+        //commandPayload = bytes 8 to 20
+        dataView.setUint8(8, intensity);
+        dataView.setUint16(9, onTime);
+        dataView.setUint8(11, repeat);
+        dataView.setUint16(12, delay);
+
+        $scope.sendToBluetoothService(dataView);
+    }
+
+    $scope.MateCommand = function (deviceID) {
+
+        var commandIndex = $scope.incrementCommandIndex();
+        var commandBehaviour = 0;
+
+        var CommandType = 'XXX'; // indicator M for move
+
+        //length of the command payload is 4 bytes header is always eight bytes
+        var commandLength = 9; //2 bytes
+
+        //create an array buffer of commandLength bytes
+        //create a dataview for the buffer
+        var dataView = new DataView(new ArrayBuffer(commandLength));
+
+        //header = bytes 0 to 7
+        dataView.setUint8(0, commandIndex);
+        dataView.setUint8(1, commandBehaviour);
+        dataView.setUint16(2, commandLength);
+        dataView.setUint8(7, CommandType);
+        //commandPayload = bytes 8 to 20
+        dataView.setUint8(8, deviceID);
+
+        $scope.sendToBluetoothService(dataView);
+    }
+
+    $scope.GreetCommand = function (deviceID) {
+
+        var commandIndex = $scope.incrementCommandIndex();
+        var commandBehaviour = 0;
+
+        var CommandType = 'XXX'; // indicator M for move
+
+        //length of the command payload is 4 bytes header is always eight bytes
+        var commandLength = 9; //2 bytes
+
+        //create an array buffer of commandLength bytes
+        //create a dataview for the buffer
+        var dataView = new DataView(new ArrayBuffer(commandLength));
+
+        //header = bytes 0 to 7
+        dataView.setUint8(0, commandIndex);
+        dataView.setUint8(1, commandBehaviour);
+        dataView.setUint16(2, commandLength);
+        dataView.setUint8(7, CommandType);
+        //commandPayload = bytes 8 to 20
+        dataView.setUint8(8, deviceID);
+
+        $scope.sendToBluetoothService(dataView);
+    }
+
+    $scope.WaggleCommand = function(intensity, onTime, repeat, delay)
     {
         //waggle robot
-        var commandIndex = $cope.incrementCommandIndex();
+        var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
         //commandLength //2 bytes
         ////3 reserved bytes
@@ -124,10 +221,39 @@
         $scope.sendToBluetoothService(dataView);
     }
 
-    $scope.ToggleCommand(deviceFlags, state, onTime, offTime)
+    $scope.RecoilCommand = function(intensity, onTime, repeat, delay)
+    {
+        //recoil of robot
+        var commandIndex = $scope.incrementCommandIndex();
+        var commandBehaviour = 0;
+
+        var CommandType = '??';
+
+        //length of the command payload is 6 bytes, header is always eight bytes
+        var commandLength = 14; //2 bytes
+
+        //create an array buffer of commandLength bytes
+        //create a dataview for the buffer
+        var dataView = new DataView(new ArrayBuffer(commandLength));
+
+        //header = bytes 0 to 7
+        dataView.setUint8(0, commandIndex);
+        dataView.setUint8(1, commandBehaviour);
+        dataView.setUint16(2, commandLength);
+        dataView.setUint8(7, CommandType);
+        //commandPayload = bytes 8 to 20
+        dataView.setUint8(8, intensity);
+        dataView.setUint16(9, onTime);
+        dataView.setUint8(11, repeat);
+        dataView.setUint16(12, delay);
+
+        $scope.sendToBluetoothService(dataView);
+    }
+
+    $scope.ToggleCommand = function (deviceFlags, state, onTime, offTime)
     {
         //toggle robot
-        var commandIndex = $cope.incrementCommandIndex();
+        var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
 
         var CommandType = 'T';
@@ -155,7 +281,7 @@
 
     $scope.PlayCommand = function (SoundIdx, repeat, delay) {
 
-        var commandIndex = $cope.incrementCommandIndex();
+        var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
 
         var CommandType = 'P';
@@ -182,7 +308,7 @@
 
     $scope.InteractCommand = function (interactionType, sourceID, destinationID) {
 
-        var commandIndex = $cope.incrementCommandIndex();
+        var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
 
         var CommandType = 'I';
@@ -203,6 +329,57 @@
         dataView.setUint8(8, interactionType);
         dataView.setUint8(9, sourceID);
         dataView.setUint32(10, destinationID);
+
+        $scope.sendToBluetoothService(dataView);
+    }
+
+    $scope.ShootCommand = function (intensity, targetID) {
+
+        var commandIndex = $scope.incrementCommandIndex();
+        var commandBehaviour = 0;
+
+        var CommandType = 'X';
+
+        //length of the command payload is 5 bytes, header is always 8 bytes
+        var commandLength = 13; //2 bytes
+
+        //create an array buffer of commandLength bytes
+        //create a dataview for the buffer
+        var dataView = new DataView(new ArrayBuffer(commandLength));
+
+        //header = bytes 0 to 7
+        dataView.setUint8(0, commandIndex);
+        dataView.setUint8(1, commandBehaviour);
+        dataView.setUint16(2, commandLength);
+        dataView.setUint8(7, CommandType);
+        //commandPayload = bytes 8 to 20
+        dataView.setUint8(8, intensity);
+        dataView.setUint32(9, targetID);
+
+        $scope.sendToBluetoothService(dataView);
+    }
+
+    $scope.ShootCommand = function (targetID) {
+
+        var commandIndex = $scope.incrementCommandIndex();
+        var commandBehaviour = 0;
+
+        var CommandType = 'X';
+
+        //length of the command payload is 4 bytes, header is always 8 bytes
+        var commandLength = 12; //2 bytes
+
+        //create an array buffer of commandLength bytes
+        //create a dataview for the buffer
+        var dataView = new DataView(new ArrayBuffer(commandLength));
+
+        //header = bytes 0 to 7
+        dataView.setUint8(0, commandIndex);
+        dataView.setUint8(1, commandBehaviour);
+        dataView.setUint16(2, commandLength);
+        dataView.setUint8(7, CommandType);
+        //commandPayload = bytes 8 to 20
+        dataView.setUint32(8, targetID);
 
         $scope.sendToBluetoothService(dataView);
     }
