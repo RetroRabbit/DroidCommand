@@ -34,25 +34,43 @@
     }
 
     //use $swipe service to get swipe evens on the elements
-
-    $swipe.bind(angular.element('#DifferentialDriveRight'), {
+    $swipe.bind($('#DifferentialDriveRight'), {
         'start': function (coords) {
-            console.log("start x co-ord: " + coords.x);
-            console.log("start x co-ord: " + coords.y);
+            console.log("DifferentialDriveRight start x co-ord: " + coords.x);
+            console.log("DifferentialDriveRight start y co-ord: " + coords.y);
         },
         'move': function (coords) {
-            console.log("move x co-ord: " + coords.x);
-            console.log("move x co-ord: " + coords.y);
+            console.log("DifferentialDriveRight move x co-ord: " + coords.x);
+            console.log("DifferentialDriveRight move y co-ord: " + coords.y);
         },
         'end': function (coords) {
-            console.log("end x co-ord: " + coords.x);
-            console.log("end x co-ord: " + coords.y);
+            console.log("DifferentialDriveRight end x co-ord: " + coords.x);
+            console.log("DifferentialDriveRight end y co-ord: " + coords.y);
         },
         'cancel': function (coords) {
-            console.log("cancel x co-ord: " + coords.x);
-            console.log("cancel x co-ord: " + coords.y);
+            console.log("DifferentialDriveRight cancel x co-ord: " + coords.x);
+            console.log("DifferentialDriveRight cancel y co-ord: " + coords.y);
         }
-    },['mouse','touch']);
+    });
+
+    $swipe.bind($('#DifferentialDriveLeft'), {
+        'start': function (coords) {
+            console.log("DifferentialDriveLeft start x co-ord: " + coords.x);
+            console.log("DifferentialDriveLeft start y co-ord: " + coords.y);
+        },
+        'move': function (coords) {
+            console.log("DifferentialDriveLeft move x co-ord: " + coords.x);
+            console.log("DifferentialDriveLeft move y co-ord: " + coords.y);
+        },
+        'end': function (coords) {
+            console.log("DifferentialDriveLeft end x co-ord: " + coords.x);
+            console.log("DifferentialDriveLeft end y co-ord: " + coords.y);
+        },
+        'cancel': function (coords) {
+            console.log("DifferentialDriveLeft cancel x co-ord: " + coords.x);
+            console.log("DifferentialDriveLeft cancel y co-ord: " + coords.y);
+        }
+    });
 
     //sends command to bluetoothservice
     //so I only have to change it in one place

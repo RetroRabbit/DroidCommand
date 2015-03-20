@@ -70,6 +70,8 @@
     <Content Include="js\controllers\navigatorController.js" />
     <Content Include="js\controllers\robotControlController.js" />
     <Content Include="js\controllers\mainController.js" />
+    <Content Include="js\controllers\robotControlControllers\differentialControlLeftController.js" />
+    <Content Include="js\controllers\robotControlControllers\differentialControlRightController.js" />
     <Content Include="js\controllers\robotControlControllers\joystickController.js" />
     <Content Include="js\controllers\robotControlControllers\robotStatusController.js" />
     <Content Include="js\ext\angular-route.min.js" />
