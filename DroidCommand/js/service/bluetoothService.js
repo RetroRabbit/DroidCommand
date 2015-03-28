@@ -61,7 +61,9 @@
             bluetoothle.isConnected(function (obj) {
                 //if connected call write
                 if (obj.isConnected) {
-                    write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, commandDataView.buffer.byteLength)));
+
+                    var dataView = new DataView(new ArrayBuffer(12));
+                    write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, message.commandDataView.byteOffset, message.commandDataView.byteLength)));
                 }
                 else {
 
@@ -74,7 +76,8 @@
                         if (obj.status == "connected") {
                             if (reconnectingCounter == 0) {
                                 reconnectingCounter++;
-                                write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, commandDataView.buffer.byteLength)));
+                                
+                                write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, message.commandDataView.byteLength)));
                             }
                         }
                         else if (obj.status == "connecting") {
@@ -98,7 +101,7 @@
             bluetoothle.isConnected(function (obj) {
                 //if connected call write
                 if (obj.isConnected) {
-                    write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(bluetoothle.stringToBytes(message.message)));
+                    write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, message.commandDataView.buffer.byteLength)));
                 }
                 else {
 
@@ -175,7 +178,7 @@
         //    }
 
         //}
-        write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bytesToEncodedString(bluetoothle.stringToBytes(message.message)));
+        write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, message.commandDataView.buffer.byteLength)));
     }
 
     // initialises bluetoothle must happen
@@ -548,7 +551,7 @@
             console.log("Discovered");
 
             setConnectedDeviceInfo(obj);
-            disconnect(obj.address);
+            //disconnect(obj.address);
 
         }
         else

@@ -76,7 +76,7 @@
     //so I only have to change it in one place
     $scope.sendToBluetoothService = function (commandDataView) {
 
-        bluetoothService.sendCommand({ "commandDataView": commandDataView, "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" });
+        bluetoothService.sendCommand({ "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e", "commandDataView": commandDataView });
     }
 
     //movement of the robot
@@ -284,15 +284,26 @@
         var dataView = new DataView(new ArrayBuffer(commandLength));
 
         //header = bytes 0 to 7
+        //commandIndex
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint16(8, deviceFlags);
         dataView.setUint8(10, state);
         dataView.setUint16(11, onTime);
         dataView.setUint16(13, offTime);
+
+        //debug code
+        var dcommandIndex = dataView.getUint8(0);
+        var dcommandBehaviour = dataView.getUint8(1);
+        var dcommandLength = dataView.getUint16(2);
+        var dCommandType = String.fromCharCode(dataView.getUint8(7));
+        var ddeviceFlags = dataView.getUint16(8);
+        var dstate = dataView.getUint8(10);
+        var donTime = dataView.getUint16(11);
+        var doffTime = dataView.getUint16(13);
 
         $scope.sendToBluetoothService(dataView);
     }
@@ -474,16 +485,41 @@
         bluetoothService.sendMessage("more");
     }
 
-    $scope.clickspinCommand = function () {
+    $scope.clickShootCommand = function () {
 
-        bluetoothService.sendMessage("Spin");
+        $scope.ToggleCommand(0, 2, 1000, 1000);
+
+       // bluetoothService.sendMessage("Shoot");
     }
 
     $scope.clickWaggleCommand = function () {
 
+        $scope.ToggleCommand(1, 2, 1000, 1000);
+
         //waggle robot
         
-        $scope.WaggleCommand(100, 5000, 2, 5000)
+       // $scope.WaggleCommand(100, 5000, 2, 5000)
+    }
+
+    $scope.clickspinCommand = function () {
+
+        $scope.ToggleCommand(2, 2, 1000, 1000);
+
+        //bluetoothService.sendMessage("Spin");
+    }
+
+    $scope.clickRecoilCommand = function () {
+
+        $scope.ToggleCommand(3, 2, 1000, 1000);
+
+        //bluetoothService.sendMessage("Recoil");
+    }
+
+    $scope.clickDanceCommand = function () {
+
+        $scope.ToggleCommand(4, 2, 1000, 1000);
+
+       // bluetoothService.sendMessage("Dance");
     }
 
     $scope.clickToggleCommand = function () {
@@ -494,7 +530,7 @@
         //    onTime = 0;
         //    offTime = 0;
 
-        $scope.ToggleCommand([0, 0, 0, 0, 0, 0, 0, 0], 0, 0, 0);
+        $scope.ToggleCommand(1, 2, 1000, 1000);
     }
 
     $scope.clickPlayCommand = function () {
@@ -503,20 +539,6 @@
         $scope.PlayCommand(1, 0, 0);
     }
 
-    $scope.clickShootCommand = function () {
-
-        bluetoothService.sendMessage("Shoot");
-    }
-
-    $scope.clickRecoilCommand = function () {
-
-        bluetoothService.sendMessage("Recoil");
-    }
-
-    $scope.clickDanceCommand = function () {
-
-        bluetoothService.sendMessage("Dance");
-    }
     //
 
 }]);
