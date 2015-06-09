@@ -6,7 +6,7 @@
     </div>
 
     <ul style="padding-right: 40px;">
-        <li data-ng-repeat="device in getDeviceList()" style="display:block;padding:10px;border:1px solid black;">
+        <li data-ng-repeat="device in devicelist" style="display:block;padding:10px;border:1px solid black;">
             <div data-ng-click="connect(device)">{{device.name}}</div>
         </li>
     </ul>

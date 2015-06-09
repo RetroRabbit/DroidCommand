@@ -11,28 +11,5 @@
         }
     }
 
-    $scope.connect = function (device) {
-        bluetoothService.connect(device.address);
-    }
-
-    $scope.disconnect = function () {
-        bluetoothService.disconnect();
-    }
-
-    //starts scanning for devices
-    $scope.scanForDevices = function () {
-        bluetoothService.DetectDevices();
-    }
-
-    $scope.getDeviceList = function () {
-
-        return bluetoothService.getDevicelist();
-    }
-
-    $scope.getFeedback = function () {
-        return bluetoothService.getFeedback();
-    }
-
-
 
     }]);

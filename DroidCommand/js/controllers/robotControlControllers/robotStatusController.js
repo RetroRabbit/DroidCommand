@@ -1,6 +1,8 @@
 ﻿angular.module('driodCommand')
 .controller('RobotStatusController', ['$scope', '$location', '$http', '$state', 'droidService', function ($scope, $location, $http, $state, droidService) {
 
+    droidService.initialiseDroids($scope.getDeviceList());
+
     $scope.getDroidList = function () {
         return droidService.getDroids();
     }
@@ -43,10 +45,16 @@
 
     $scope.selectRobotLeft = function () {
         droidService.previousDroid();
+
+        //connect to selected robot
+        $scope.connect($scope.getSelectedDroid);
     }
 
     $scope.selectRobotRight = function () {
         droidService.nextDroid();
+
+        //connect to selected robot
+        $scope.connect($scope.getSelectedDroid);
     }
 
     $scope.selectAllRobots = function () {

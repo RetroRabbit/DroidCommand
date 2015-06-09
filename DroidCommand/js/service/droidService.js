@@ -1,45 +1,46 @@
 ﻿angular.module('driodCommand')
 .service('droidService', function ($location, $rootScope) {
 
-    this.droidList = {};
+    //this.droidList = {};
+    this.counterID = 0;
 
-    this.droidList = [
-    {
-        ID: 0,
-        Name: 'All',
-        Img: 'img/robot.png',
-        Mode: 'N/A',
-        Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-        Battery: 100,
-        EmotionLevel: 100
-    },
-    {
-        ID: 1,
-        Name: 'Robocop',
-        Img: 'img/robot.png',
-        Mode: 'Autonomous',
-        Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-        Battery: 50,
-        EmotionLevel: 80
-    },
-    {
-        ID: 2,
-        Name: 'T1000',
-        Img: 'img/robot.png',
-        Mode: 'Autonomous',
-        Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-        Battery: 40,
-        EmotionLevel: 20
-    },
-    {
-        ID: 3,
-        Name: 'Data',
-        Img: 'img/robot.png',
-        Mode: 'Autonomous',
-        Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-        Battery: 60,
-        EmotionLevel: 60
-    }];
+    //this.droidList = [
+    //{
+    //    ID: 0,
+    //    Name: 'All',
+    //    Img: 'img/robot.png',
+    //    Mode: 'N/A',
+    //    Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+    //    Battery: 100,
+    //    EmotionLevel: 100
+    //},
+    //{
+    //    ID: 1,
+    //    Name: 'Robocop',
+    //    Img: 'img/robot.png',
+    //    Mode: 'Autonomous',
+    //    Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+    //    Battery: 50,
+    //    EmotionLevel: 80
+    //},
+    //{
+    //    ID: 2,
+    //    Name: 'T1000',
+    //    Img: 'img/robot.png',
+    //    Mode: 'Autonomous',
+    //    Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+    //    Battery: 40,
+    //    EmotionLevel: 20
+    //},
+    //{
+    //    ID: 3,
+    //    Name: 'Data',
+    //    Img: 'img/robot.png',
+    //    Mode: 'Autonomous',
+    //    Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+    //    Battery: 60,
+    //    EmotionLevel: 60
+    //}];
 
     this.selectedDroidPosition = 1;
  
@@ -51,48 +52,48 @@
     //    nextDroid: nextDroid
     //});
 
-    this.initialiseDroids = function ()
+    this.addDroid = function (device)
+    {
+        var tempDevice = {
+                            ID: this.droidList.length,
+                            name: device.name,
+                            address: device.address,
+                            info: device.info,
+                            Img: 'img/robot.png',
+                            Mode: 'Autonomous',
+                            Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
+                            Battery: 100,
+                            EmotionLevel: 100
+        }
+        return tempDevice;
+    }
+
+    this.initialiseDroids = function (deviceList)
     {
         this.selectedDroidPosition = 0;
 
         this.droidList = [
         {
             ID: 0,
-            Name: 'All',
+            name: 'All',
+            address: '0',
+            info: null,
             Img: 'img/robot.png',
             Mode: 'N/A',
             Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
             Battery: 100,
             EmotionLevel: 100
-        },
-        {
-            ID: 1,
-            Name: 'Robocop',
-            Img: 'img/robot.png',
-            Mode: 'Autonomous',
-            Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-            Battery: 50,
-            EmotionLevel: 80
-        },
-        {
-            ID: 2,
-            Name: 'T1000',
-            Img: 'img/robot.png',
-            Mode: 'Autonomous',
-            Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-            Battery: 40,
-            EmotionLevel: 20
-        },
-        {
-            ID: 3,
-            Name: 'Data',
-            Img: 'img/robot.png',
-            Mode: 'Autonomous',
-            Actions: [{ Name: "Sheila", Img: "img/find.PNG" }, { Name: "Left", Img: "img/left.PNG" }],
-            Battery: 60,
-            EmotionLevel: 60
-        }];
-  
+        }
+        ];
+
+        for (i = this.droidList.length; i < deviceList.length; i++) {
+            this.droidList[i] = this.addDroid(deviceList[i])
+        }
+
+        if (this.droidList.length > 0) {
+            this.selectedDroidPosition = 0;
+        }
+          
     }
 
     this.getDroids = function ()

@@ -63,6 +63,7 @@
     <Content Include="css\styles.css" />
     <Content Include="index.html" />
     <Content Include="js\app.js" />
+    <Content Include="js\controllers\appController.js" />
     <Content Include="js\controllers\bluetoothController.js" />
     <Content Include="js\controllers\centralController.js" />
     <Content Include="js\controllers\droidWarsController.js" />
@@ -93,7 +94,9 @@
     <Content Include="views\robotControlViews\robotControl_MotionControl.html" />
     <Content Include="views\robotControlViews\robotControl_ProgramRobot.html" />
     <Content Include="views\robotControlViews\robotControl_RobotStatus.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

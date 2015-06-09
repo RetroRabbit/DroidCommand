@@ -4,10 +4,10 @@
     var deviceList = [];
     var ConnectedDeviceInfo = null;
     var feedback = "feedback";
-    var FoundDevices = [];
+    var FoundDevices = {};
 
     this.deviceMethods = {};
-    this.deviceMethods.deviceList = this.deviceList;
+    this.deviceMethods.deviceList = deviceList;
     this.deviceMethods.ConnectedDeviceInfo = this.ConnectedDeviceInfo;
 
     var disconnectCounter = 0;
@@ -41,7 +41,8 @@
         disconnect: disconnect,
         close: close,
         write: write,
-        reconnect: reconnect
+        reconnect: reconnect,
+        isDeviceDiscovered: isDeviceDiscovered
 
     });
 
@@ -158,26 +159,6 @@
     {
         disconnectCounter = 0;
 
-        //get the number of calls to be made
-        //for (var i = 0; i < ConnectedDeviceInfo.services.length; i++) {
-        //    disconnectCounter += ConnectedDeviceInfo.services[i].characteristics.length;
-        //}
-
-        //iterate through each characteritic and write the message to it //todo specify correct service and characteristic
-        //for (var i = 0; i < ConnectedDeviceInfo.services.length; i++) {
-
-        //    for (var j = 0; j < ConnectedDeviceInfo.services[i].characteristics.length; j++) {
-        //        if (ConnectedDeviceInfo.services[i].characteristics[j].properties.write == true)
-        //        {
-        //            write(ConnectedDeviceInfo.address, ConnectedDeviceInfo.services[i].serviceUuid, ConnectedDeviceInfo.services[i].characteristics[j].characteristicUuid, bluetoothle.stringToBytes(message));
-        //        }
-        //        else
-        //        {
-        //            disconnectCounter--;
-        //        }
-        //    }
-
-        //}
         write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, message.commandDataView.buffer.byteLength)));
     }
 
@@ -275,9 +256,9 @@
         if (obj.status == "scanResult") {
             console.log("Scan Result");
 
-            if (!getFoundDevices()[device.address])
+            if (!getFoundDevices()[obj.address])
             {
-                getFoundDevices()[device.address] = true;
+                getFoundDevices()[obj.address] = true;
                 addDevice(obj.address, obj.name);
             }
         }
@@ -296,7 +277,7 @@
     //adds a device to devicelist arrays
     function addDevice(address, name)
     {
-        getDevicelist().push({ "address": address, "name": name });
+        getDevicelist().push({ "address": address, "name": name, "info":null });
     }
 
     function stopScan() {
@@ -363,15 +344,19 @@
         console.log("Connect Success : " + JSON.stringify(obj));
 
         //currently connecting set to one device
-        
+    
 
         discover(obj.address);
 
         if (obj.status == "connected")
         {
             console.log("Connected");
-            //custom
+
+            //store current device info
             setConnectedDeviceInfo(obj);
+
+            //add the discovered info to the device in the devicelist
+            getDeviceInDevicelist(obj.address).info = obj;
 
         }
         else if (obj.status == "connecting")
@@ -425,13 +410,13 @@
     }
 
     //Disconnect from a Bluetooth LE device
-    function disconnect(address)
+    function disconnect(address, disconnectSuccessVar, disconnectErrorVar)
     {
         var paramsObj = {address:address};
 	
         console.log("Disconnect : " + JSON.stringify(paramsObj));
 	
-        bluetoothle.disconnect(disconnectSuccess, disconnectError, paramsObj);
+        bluetoothle.disconnect(disconnectSuccessVar, disconnectErrorVar, paramsObj);
 	
         return false;
     }
@@ -452,6 +437,10 @@
         {
             console.log("Unexpected Disconnect Status");
         }
+    }
+
+    function disconnectError(obj) {
+        console.log("Disconnect Error : " + JSON.stringify(obj));
     }
 
     function isConnected(address,isConnectedSuccessVar) {
@@ -475,10 +464,6 @@
         }
     }
 
-    function disconnectError(obj)
-    {
-        console.log("Disconnect Error : " + JSON.stringify(obj));
-    }
 
     //Close/dispose a Bluetooth LE device. Must disconnect before closing.
     function close(address)
@@ -608,11 +593,20 @@
     }
 
     //decrements a value and then disconnects if it is zero
-    function coundownToDisconnect(obj) {
-        disconnectCounter--;
-        if (disconnectCounter <= 0) {
-            disconnect(obj.address)
+    //function coundownToDisconnect(obj) {
+    //    disconnectCounter--;
+    //    if (disconnectCounter <= 0) {
+    //        disconnect(obj.address)
+    //    }
+    //}
+
+    //check if a device (via address) attributes have already been discovered
+   function isDeviceDiscovered(address)
+    {
+        if (getDeviceInDevicelist(address).info != null) {
+            return true;
         }
+        return false;
     }
 
     //getters and setters
@@ -624,12 +618,28 @@
     function setDevicelist(sdeviceList) {
         deviceList = sdeviceList;
     }
+
+    //returns the device in the devicelist that matches the address
+    function getDeviceInDevicelist(address) {
+
+        for (var i = 0; i < deviceList.length; i++) {
+            if (deviceList[i].address == address) {
+                return deviceList[i];
+            }
+        }
+
+        return null;
+    }
+
     //
     function getConnectedDeviceInfo() {
         return ConnectedDeviceInfo;
     }
 
-    function setConnectedDeviceInfo(sConnectedDeviceInfo) {
+    function setConnectedDeviceInfo(sConnectedDeviceInfo)
+    {
+
+        //update the connected device info
         ConnectedDeviceInfo = sConnectedDeviceInfo;
     }
     //
