@@ -1,14 +1,11 @@
 ﻿angular.module('driodCommand')
-.service('bluetoothService', function ($location, $rootScope,$q) {this.ConnectedDeviceInfo
+.service('bluetoothService', function ($location, $rootScope, $q,$timeout, droidService) {
 
     var deviceList = [];
     var ConnectedDeviceInfo = null;
     var feedback = "feedback";
     var FoundDevices = {};
-
-    this.deviceMethods = {};
-    this.deviceMethods.deviceList = deviceList;
-    this.deviceMethods.ConnectedDeviceInfo = this.ConnectedDeviceInfo;
+    var freeToExecuteCommand = false;
 
     var disconnectCounter = 0;
 
@@ -26,6 +23,8 @@
         setFeedback: setFeedback,
         getFoundDevices: getFoundDevices,
         setFoundDevices:setFoundDevices,
+        isFreeToExecute:isFreeToExecute,
+        setFreeToExecute: setFreeToExecute,
 
         DetectDevices: DetectDevices,
         sendMessage: sendMessage,
@@ -45,6 +44,7 @@
         isDeviceDiscovered: isDeviceDiscovered
 
     });
+
 
     function DetectDevices()
     {
@@ -136,7 +136,7 @@
             return;
         }
 
-        setTimeout(function () {
+        $timeout(function () {
 
             var paramsObj = { address: ConnectedDeviceInfo.address };
             //check if connected now
@@ -247,7 +247,7 @@
         
         bluetoothle.startScan(startScanSuccess, startScanError, paramsObj);
 
-        setTimeout(stopScan, 60000);
+        $timeout(stopScan, 60000);
         return false;
     }
 
@@ -577,6 +577,9 @@
 
         console.log(bluetoothle.bytesToString(bluetoothle.encodedStringToBytes(obj.value)))
 
+        freeToExecuteCommand = true;
+        console.log("freeToExecuteCommand - " + freeToExecuteCommand);
+
         //decrements a value and then disconnects if it is zero
         //coundownToDisconnect(obj);
     }
@@ -587,7 +590,7 @@
 
         console.log(bluetoothle.bytesToString(bluetoothle.encodedStringToBytes(obj.value)))
 
-
+        freeToExecuteCommand = true;
         //decrements a value and then disconnects if it is zero
         //coundownToDisconnect(obj);
     }
@@ -657,6 +660,14 @@
 
     function setFoundDevices(sFoundDevices) {
         FoundDevices = sFoundDevices;
+    }
+    //
+    function isFreeToExecute() {
+        return freeToExecuteCommand;
+    }
+
+    function setFreeToExecute(sFreeToExecute) {
+        freeToExecuteCommand = sFreeToExecute;
     }
 
 });

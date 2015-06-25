@@ -1,9 +1,64 @@
 ﻿angular.module('driodCommand')
-.controller('RobotControlController', ['$scope', '$location', '$http', '$state', 'bluetoothService', '$swipe', function ($scope, $location, $http, $state, bluetoothService, $swipe) {
+.controller('RobotControlController', ['$scope', '$rootScope', '$location', '$http', '$state', '$swipe', '$interval', 'bluetoothService', function ($scope, $rootScope, $location, $http, $state, $swipe, $interval,  bluetoothService) {
 
     $scope.viewName = "";
     $scope.getViewName = function () {
         return $scope.viewName;
+    }
+
+    $scope.commandQueue = [];
+
+    $scope.wrapFunction = function (fn, context, params) {
+        return function () {
+            fn.apply(context, params);
+        };
+    }
+
+    //start invterval that executes commands to the droids
+    $scope.CommandExecutionInterval = $interval($scope.executeCommandInQueue, 1000);
+
+
+    //function that executes the next command within the queue
+    $scope.executeCommandInQueue = function () {
+
+        if ($scope.commandQueue.length > 0 && $scope.isFreeToExecute()) {
+
+            $scope.setFreeToExecute(false);
+            console.log("command");
+            //get the command object from the command queue
+            var commandObj = $scope.commandQueue.shift();
+            //assemble the device details
+            var device = { "address": commandObj.droid.address, "name": commandObj.droid.name, "info": commandObj.droid.info };
+            //execute the command on the appController reconnecting if necessary
+            $scope.reconnectAndExecuteCommand(device, commandObj.command);
+        }
+
+    }
+
+    //when leaving the controller
+    $rootScope.$on('$stateChangeStart',
+    function (event, toState, toParams, fromState, fromParams) {
+
+        $interval.cancel($scope.CommandExecutionInterval);
+        console.log("CommandExecutionInterval canceled");
+        //set free to execute to true
+        $scope.setFreeToExecute(true);
+    });
+
+
+    //this function create an array of default behaviour for a robot
+    $scope.createDefaultBehaviour = function () {
+
+        // Create an array and append your functions to them
+        var defaultBehaviourArray = [];
+
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [0, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [1, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [2, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [3, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [4, 2, 1000, 1000], duration: 1000 });
+
+        return defaultBehaviourArray;
     }
 
     $scope.commandIndex = -1;
@@ -487,15 +542,18 @@
 
     $scope.clickShootCommand = function () {
 
-        $scope.ToggleCommand(0, 2, 1000, 1000);
+        //$scope.ToggleCommand(0, 2, 1000, 1000);
+        var obj = { command: $scope.wrapFunction($scope.ToggleCommand, this, [0, 2, 1000, 1000]), droid: $scope.getSelectedDroid() };
+        $scope.commandQueue.push(obj);
+
 
        // bluetoothService.sendMessage("Shoot");
     }
 
     $scope.clickWaggleCommand = function () {
 
-        $scope.ToggleCommand(1, 2, 1000, 1000);
-
+//        $scope.ToggleCommand(1, 2, 1000, 1000);
+        $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [1, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //waggle robot
         
        // $scope.WaggleCommand(100, 5000, 2, 5000)
@@ -503,22 +561,22 @@
 
     $scope.clickspinCommand = function () {
 
-        $scope.ToggleCommand(2, 2, 1000, 1000);
-
+//        $scope.ToggleCommand(2, 2, 1000, 1000);
+        $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [2, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //bluetoothService.sendMessage("Spin");
     }
 
     $scope.clickRecoilCommand = function () {
 
-        $scope.ToggleCommand(3, 2, 1000, 1000);
-
+//       $scope.ToggleCommand(3, 2, 1000, 1000);
+        $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [3, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //bluetoothService.sendMessage("Recoil");
     }
 
     $scope.clickDanceCommand = function () {
 
-        $scope.ToggleCommand(4, 2, 1000, 1000);
-
+//        $scope.ToggleCommand(4, 2, 1000, 1000);
+        $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [4, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
        // bluetoothService.sendMessage("Dance");
     }
 
@@ -539,6 +597,13 @@
         $scope.PlayCommand(1, 0, 0);
     }
 
-    //
+    //destroy intervals and timeouts
+    $scope.$on('$stateChangeStart',
+    function (event, toState, toParams, fromState, fromParams) {
+
+        $interval.cancel($scope.CommandExecutionInterval);
+
+    })
+
 
 }]);

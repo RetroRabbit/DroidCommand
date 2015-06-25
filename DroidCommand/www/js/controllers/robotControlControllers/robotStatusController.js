@@ -1,16 +1,7 @@
 ﻿angular.module('driodCommand')
-.controller('RobotStatusController', ['$scope', '$location', '$http', '$state', 'droidService', function ($scope, $location, $http, $state, droidService) {
+.controller('RobotStatusController', ['$scope', '$location', '$http', '$state', '$timeout', 'droidService', function ($scope, $location, $http, $state, $timeout, droidService) {
 
-    droidService.initialiseDroids($scope.getDeviceList());
-
-    $scope.getDroidList = function () {
-        return droidService.getDroids();
-    }
-
-
-    $scope.getSelectedDroid = function () {
-        return droidService.getActiveDroid();
-    }
+    droidService.initialiseDroids($scope.getDeviceList(), $scope.getConnectedDeviceInfo());
 
     //default to sensors
     $scope.nameOrSensors = "Sensors";
@@ -47,19 +38,24 @@
         droidService.previousDroid();
 
         //connect to selected robot
-        $scope.connect($scope.getSelectedDroid);
+        $scope.connect($scope.getSelectedDroid());;
     }
 
     $scope.selectRobotRight = function () {
+
+        $scope.startAutomonousBehaviour($scope.getSelectedDroid());
+
         droidService.nextDroid();
 
+        $scope.stopAutomonousBehaviour($scope.getSelectedDroid());
+
         //connect to selected robot
-        $scope.connect($scope.getSelectedDroid);
+        $scope.connect($scope.getSelectedDroid());
     }
 
     $scope.selectAllRobots = function () {
-        $scope.selectedDroidPosition = 0;
-        $scope.activeDroid = $scope.allDroid;
+        //$scope.selectedDroidPosition = 0;
+        //$scope.activeDroid = $scope.allDroid;
     }
 
     $scope.selectSettings = function () {
@@ -107,7 +103,41 @@
         $scope.nameOrSensors = "Sensors"
     }
 
+    //starts automonous behaviour for a selected droid. calls a timeout to send commands to the control pipeline
+    $scope.startAutomonousBehaviour = function (droid) {
 
+        if (droid.AutonomousBehaviour == null) {
+            droid.AutonomousBehaviour = $scope.createDefaultBehaviour();
+        }
+
+        droid.Mode = 'Autonomous';
+
+        droid.BehaviourTimer = $timeout(function () { timeoutCommandPipingFunction(droid, 0) }, 10);
+
+    }
+
+    //cancels automonous behaviour for a selected droid. cancels the current timeout on the droids behaviour
+    $scope.stopAutomonousBehaviour = function(droid) {
+        droid.Mode = 'Manual';
+        if (droid.BehaviourTimer) {
+            $timeout.cancel(droid.BehaviourTimer);
+            droid.BehaviourTimer = null;
+        }
+    }
+
+    function timeoutCommandPipingFunction(droid, iteration)
+    {
+        //send command to the command pipe
+        $scope.commandQueue.push({ command: $scope.wrapFunction(droid.AutonomousBehaviour[iteration].command, this, droid.AutonomousBehaviour[iteration].params), droid: droid });
+
+        //iterate to the next method in the array
+        iteration++;
+        if (iteration >= droid.AutonomousBehaviour.length) {
+            iteration = 0;
+        }
+        //call the next method in the AutonomousBehaviour array via a timeout when the current method is done executing on the device
+        droid.BehaviourTimer = $timeout(function () { timeoutCommandPipingFunction(droid, iteration) }, droid.AutonomousBehaviour[iteration].duration);
+    }
 //
 
     function refreshSwatch(ev, ui) {
