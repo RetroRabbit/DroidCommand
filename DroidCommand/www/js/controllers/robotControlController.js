@@ -52,11 +52,11 @@
         // Create an array and append your functions to them
         var defaultBehaviourArray = [];
 
-        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [0, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [0, 2, 1000, 1000], duration: 5000 });
         defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [1, 2, 1000, 1000], duration: 1000 });
-        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [2, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [2, 2, 1000, 1000], duration: 5000 });
         defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [3, 2, 1000, 1000], duration: 1000 });
-        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [4, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [4, 2, 1000, 1000], duration: 5000 });
 
         return defaultBehaviourArray;
     }
@@ -543,8 +543,8 @@
     $scope.clickShootCommand = function () {
 
         //$scope.ToggleCommand(0, 2, 1000, 1000);
-        var obj = { command: $scope.wrapFunction($scope.ToggleCommand, this, [0, 2, 1000, 1000]), droid: $scope.getSelectedDroid() };
-        $scope.commandQueue.push(obj);
+        var commandObj = { command: $scope.wrapFunction($scope.ToggleCommand, this, [0, 2, 1000, 1000]), droid: $scope.getSelectedDroid() };
+        $scope.commandQueue.push(commandObj);
 
 
        // bluetoothService.sendMessage("Shoot");
