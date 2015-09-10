@@ -9,15 +9,11 @@
     <link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.min.css" /> 
     <!--custom slider css  -->
     <link rel="stylesheet" type="text/css" href="css/slider.css" /> 
-
+    <!--blockly css  -->
+    <link rel="stylesheet" type="text/css" href="css/angular-blockly.less" /> 
+     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-</head>
-<body  style="overflow:hidden"  onload="onLoad()">
-
-    <div ui-view  ng-controller="appController" class="fill">
-
-    </div>
     <script src="cordova.js"></script>
 
     <!-- include script files after DOM has been loaded -->
@@ -26,13 +22,26 @@
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js" ></script>
     <script type="text/javascript" src="js/ext/angular.min.js" ></script>
 
+
     <!-- angular-ui-router -->
     <script type="text/javascript" src="js/ext/angular-ui-router.min.js" ></script>
     <!-- angular-touch -->
     <script type="text/javascript" src="js/ext/angular-touch.min.js" ></script>
     <!--custom slider  -->
     <script type="text/javascript" src="js/ext/slider.js" ></script>
-    
+    <!-- blockly  -->
+
+    <script type="text/javascript" src="js/ext/blockly/blockly_compressed.js" ></script>
+    <script type="text/javascript" src="js/ext/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="js/ext/en.js"></script>
+    <script type="text/javascript" src="js/ext/angular-blockly.js" ></script>
+    <!-- Hammer js for gestures -->
+    <script type="text/javascript" src="js/ext/hammer.js" ></script>
+    <script type="text/javascript" src="js/ext/angular.hammer.js" ></script>
+
+    <!-- angular gestures -->
+    <!--<script type="text/javascript" src="js/ext/gestures.js" ></script>-->
+
     <script type="text/javascript" src="js/app.js" ></script>
     <script type="text/javascript" src="js/controllers/appController.js"></script>
     <script type="text/javascript" src="js/controllers/mainController.js" ></script>
@@ -49,7 +58,10 @@
 
     <script type="text/javascript" src="js/service/droidService.js"></script>
     <script type="text/javascript" src="js/service/bluetoothService.js"></script>
+</head>
+<body  style="overflow:hidden"  onload="onLoad()">
 
+    <div ui-view  ng-controller="appController" class="fill"></div>
 
 </body>
 </html>

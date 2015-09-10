@@ -140,6 +140,7 @@
     <Content Include="www\js\ext\angular-route.min.js" />
     <Content Include="www\js\ext\angular-touch.min.js" />
     <Content Include="www\js\ext\angular-ui-router.min.js" />
+    <Content Include="www\js\ext\angular.hammer.min.js" />
     <Content Include="www\js\ext\angular.min.js" />
     <Content Include="www\js\ext\bootstrap-slider.js" />
     <Content Include="www\js\ext\gestures.js" />
@@ -148,6 +149,7 @@
     <Content Include="www\js\ext\slider.js" />
     <Content Include="www\js\service\bluetoothService.js" />
     <Content Include="www\js\service\droidService.js" />
+    <Content Include="www\js\service\updateService.js" />
     <Content Include="www\views\central.html" />
     <Content Include="www\views\droidWars.html" />
     <Content Include="www\views\games.html" />

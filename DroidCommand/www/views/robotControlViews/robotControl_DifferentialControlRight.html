@@ -43,11 +43,13 @@
             </div>
            </div>
         </div>
-    <div id="DifferentialDriveRight" class="row"  style="height: 80%;">
+    <div id="DifferentialDriveRight"  hm-pan="onPanRight($event)" hm-recognizer-options="[{'type':'pan','directions':'DIRECTION_ALL'}]" class="row"  style="height: 80%;">
+
+        
         <div class="col-xs-12 fill  ">
             <div class="row" style="height:33%">
                 <div class="col-xs-12 fill ">
-                    <div class="imgDifferentialForward imgControls"   data-ng-click="clickDifferentialRightForward()"></div>
+                    <div class="imgDifferentialForward imgControls"  ></div>
                 </div>
             </div>
             <div class="row" style="height:33%">
@@ -61,7 +63,7 @@
             </div>
             <div class="row" style="height:33%">
                 <div class="col-xs-12 fill ">
-                    <div class="imgDifferentialReverse imgControls"   data-ng-click="clickDifferentialRightReverse()"></div>
+                    <div class="imgDifferentialReverse imgControls" ></div>
                 </div>
             </div>
         </div>

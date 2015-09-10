@@ -1,7 +1,9 @@
-﻿angular.module('driodCommand', ['ui.router', 'ui.slider', 'ngTouch'])
-    .config(function($stateProvider, $urlRouterProvider) {
+﻿angular.module('driodCommand', ['ui.router', 'hmTouchEvents', 'ui.slider', 'ngTouch', 'angular-blockly'])
+    .config(function ($stateProvider, $urlRouterProvider, ngBlocklyProvider) {
     
+
         $urlRouterProvider.otherwise('/odyssey');
+
         // ODYSSEY STATE ========================================
         $stateProvider.state('odyssey', {
             url: '/odyssey',
@@ -33,7 +35,7 @@
                     },
                 }
             })
-        
+
         // ROBOTCONTROL STATE ========================================
             .state('robotControl', {
                 url: '/robotControl',
@@ -63,7 +65,7 @@
                         templateUrl: 'views/robotControlViews/robotControl_DifferentialControlLeft.html',
                     },
                     'navColumn@robotControl': {
-                    templateUrl: 'views/robotControlViews/robotControl_DifferentialControlRight.html',
+                        templateUrl: 'views/robotControlViews/robotControl_DifferentialControlRight.html',
                     }
                 }
             })
@@ -128,9 +130,10 @@
                         controller: 'NavigatorController'
                     }
                 }
-            })
+            });
 
-    });
+
+    }    );
 
 
 

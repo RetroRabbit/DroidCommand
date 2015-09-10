@@ -390,3 +390,11 @@ html, body {
     text-transform: uppercase;
     text-align: center;
 }
+
+/* Status classes*/
+
+.connectedRobot
+{
+    color: blue;
+    font-weight:bold;
+}

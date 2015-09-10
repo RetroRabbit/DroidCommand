@@ -7,8 +7,8 @@
 
     <ul style="padding-right: 40px;">
         <li data-ng-repeat="device in devicelist" style="display:block;padding:10px;border:1px solid black;">
-            <div data-ng-click="connect(device)">{{device.name}}</div>
+            <div data-ng-click="connect(device)" data-ng-class="{connectedRobot : IsDiscovered(device)}">{{device.name}}</div>
         </li>
     </ul>
-    <div style="display:block">{{getFeedback()}}</div>    
+    <div style="display:block">{{feedback}}</div>  
 </div>

@@ -115,7 +115,7 @@
                         if (obj.status == "connected") {
                             if (reconnectingCounter == 0) {
                                 reconnectingCounter++;
-                                writeToAllCharacteristics(message);
+                                write(ConnectedDeviceInfo.address, message.serviceUuid, message.characteristicUuid, bluetoothle.bluetoothle.bytesToEncodedString(new Uint8Array(message.commandDataView.buffer, 0, message.commandDataView.buffer.byteLength)));
                             }
                         }
                         else if (obj.status == "connecting") {

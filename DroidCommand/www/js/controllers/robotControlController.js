@@ -1,12 +1,11 @@
 ﻿angular.module('driodCommand')
-.controller('RobotControlController', ['$scope', '$rootScope', '$location', '$http', '$state', '$swipe', '$interval', 'bluetoothService', function ($scope, $rootScope, $location, $http, $state, $swipe, $interval,  bluetoothService) {
+.controller('RobotControlController', ['$scope', '$rootScope', '$location', '$http', '$state', '$swipe', '$interval', 'bluetoothService', function ($scope, $rootScope, $location, $http, $state, $swipe, $interval, bluetoothService) {
 
     $scope.viewName = "";
     $scope.getViewName = function () {
         return $scope.viewName;
     }
 
-    $scope.commandQueue = [];
 
     $scope.wrapFunction = function (fn, context, params) {
         return function () {
@@ -14,16 +13,15 @@
         };
     }
 
-    //start invterval that executes commands to the droids
-    $scope.CommandExecutionInterval = $interval($scope.executeCommandInQueue, 1000);
-
+    //start interval that executes commands to the droids
+    $scope.CommandExecutionInterval = $interval($scope.executeCommandInQueue, 100);
 
     //function that executes the next command within the queue
     $scope.executeCommandInQueue = function () {
 
         if ($scope.commandQueue.length > 0 && $scope.isFreeToExecute()) {
 
-            $scope.setFreeToExecute(false);
+            //$scope.setFreeToExecute(false);
             console.log("command");
             //get the command object from the command queue
             var commandObj = $scope.commandQueue.shift();
@@ -36,30 +34,60 @@
     }
 
     //when leaving the controller
-    $rootScope.$on('$stateChangeStart',
-    function (event, toState, toParams, fromState, fromParams) {
+    //$rootScope.$on('$stateChangeStart',
+    //function (event, toState, toParams, fromState, fromParams) {
 
-        $interval.cancel($scope.CommandExecutionInterval);
-        console.log("CommandExecutionInterval canceled");
-        //set free to execute to true
-        $scope.setFreeToExecute(true);
-    });
+    //    $interval.cancel($scope.CommandExecutionInterval);
+    //    console.log("CommandExecutionInterval canceled");
+    //    if($scope.DifferentialMovementInterval != null)
+    //    {
+    //        $interval.cancel($scope.DifferentialMovementInterval);
+    //        $scope.DifferentialMovementInterval = null;
+    //    }
+    //    //set free to execute to true
+    //    $scope.setFreeToExecute(true);
+    //});
 
 
     //this function create an array of default behaviour for a robot
     $scope.createDefaultBehaviour = function () {
 
+        //$scope.MoveCommand = function (speedLeft, speedRight, time) 
+
         // Create an array and append your functions to them
         var defaultBehaviourArray = [];
-
+        defaultBehaviourArray.push({ command: $scope.MoveCommand, params: [127, 127, 1000], duration: 1000 });
         defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [0, 2, 1000, 1000], duration: 5000 });
+        defaultBehaviourArray.push({ command: $scope.MoveCommand, params: [0, 127, 700], duration: 1000 });
         defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [1, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.MoveCommand, params: [127, 127, 1000], duration: 1000 });
         defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [2, 2, 1000, 1000], duration: 5000 });
+        defaultBehaviourArray.push({ command: $scope.MoveCommand, params: [0, 127, 700], duration: 1000 });
         defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [3, 2, 1000, 1000], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.MoveCommand, params: [127, 127, 1000], duration: 1000 });
         defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [4, 2, 1000, 1000], duration: 5000 });
+        defaultBehaviourArray.push({ command: $scope.MoveCommand, params: [0, 127, 700], duration: 1000 });
+        defaultBehaviourArray.push({ command: $scope.ToggleCommand, params: [0, 2, 1000, 1000], duration: 5000 });
+        defaultBehaviourArray.push({ command: $scope.MoveCommand, params: [127, 127, 1000], duration: 1000 });
 
         return defaultBehaviourArray;
     }
+
+    $scope.getRemoteBehaviour = function () {
+
+        // Create an array and append your functions to them
+        var defaultBehaviourArray = [];
+
+        defaultBehaviourArray = updateService.getUpdatedData();
+        for (var i = 0; i < defaultBehaviourArray.length; i++) {
+            defaultBehaviourArray[i].command = eval("$scope." + defaultBehaviourArray[i].command);
+        }
+
+
+        return defaultBehaviourArray;
+    }
+
+
 
     $scope.commandIndex = -1;
     $scope.incrementCommandIndex = function () {
@@ -88,44 +116,68 @@
         return $scope.getControlSelected() === controlType;
     }
 
-    //use $swipe service to get swipe evens on the elements
-    $swipe.bind($('#DifferentialDriveRight'), {
-        'start': function (coords) {
-            console.log("DifferentialDriveRight start x co-ord: " + coords.x);
-            console.log("DifferentialDriveRight start y co-ord: " + coords.y);
-        },
-        'move': function (coords) {
-            console.log("DifferentialDriveRight move x co-ord: " + coords.x);
-            console.log("DifferentialDriveRight move y co-ord: " + coords.y);
-        },
-        'end': function (coords) {
-            console.log("DifferentialDriveRight end x co-ord: " + coords.x);
-            console.log("DifferentialDriveRight end y co-ord: " + coords.y);
-        },
-        'cancel': function (coords) {
-            console.log("DifferentialDriveRight cancel x co-ord: " + coords.x);
-            console.log("DifferentialDriveRight cancel y co-ord: " + coords.y);
+    //interval that handles differential movement
+    $scope.DifferentialMovementInterval = null;
+    $scope.startDifferentialMovement = function () {
+        if ($scope.DifferentialMovementInterval == null) {
+            $scope.DifferentialMovementInterval = $interval($scope.ExecuteDifferentialMovement, 200);
         }
-    });
+    }
 
-    $swipe.bind($('#DifferentialDriveLeft'), {
-        'start': function (coords) {
-            console.log("DifferentialDriveLeft start x co-ord: " + coords.x);
-            console.log("DifferentialDriveLeft start y co-ord: " + coords.y);
-        },
-        'move': function (coords) {
-            console.log("DifferentialDriveLeft move x co-ord: " + coords.x);
-            console.log("DifferentialDriveLeft move y co-ord: " + coords.y);
-        },
-        'end': function (coords) {
-            console.log("DifferentialDriveLeft end x co-ord: " + coords.x);
-            console.log("DifferentialDriveLeft end y co-ord: " + coords.y);
-        },
-        'cancel': function (coords) {
-            console.log("DifferentialDriveLeft cancel x co-ord: " + coords.x);
-            console.log("DifferentialDriveLeft cancel y co-ord: " + coords.y);
+    $scope.MoveLeft = 0;
+    $scope.MoveRight = 0;
+
+    //creates movement command based off of differential movement object
+    $scope.ExecuteDifferentialMovement = function () {
+
+        var leftWeight = 0;
+        var rightWeight = 0;
+
+        if ($scope.MoveLeft != 0)
+            leftWeight = $scope.MoveLeft < 0 ? -127 : 127;
+
+        if ($scope.MoveRight != 0)
+            rightWeight = $scope.MoveRight < 0 ? -127 : 127;
+
+        if ($scope.MoveLeft != 0 || $scope.MoveRight != 0) {
+            var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [leftWeight, rightWeight, 1000]), droid: $scope.getSelectedDroid() };
+            $scope.commandQueue.push(commandObj);
         }
-    });
+
+        $scope.MoveLeft = 0;
+        $scope.MoveRight = 0;
+    }
+
+    $scope.onPanleft = function (event) {
+        $scope.startDifferentialMovement();
+
+        switch (event.direction) {
+            case 8:
+                console.log('left Up');
+                $scope.MoveLeft++;
+                break;
+            case 16:
+                console.log('Left Down');
+                $scope.MoveLeft--;
+                break;
+        }
+    };
+
+    $scope.onPanRight = function (event) {
+        $scope.startDifferentialMovement();
+
+        switch (event.direction) {
+            case 8:
+                console.log('Up');
+                $scope.MoveRight++;
+                break;
+            case 16:
+                console.log('Down');
+                $scope.MoveRight--;
+                break;
+
+        };
+    }
 
     //sends command to bluetoothservice
     //so I only have to change it in one place
@@ -139,11 +191,11 @@
 
         var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
-        
+
         var CommandType = 'M'; // indicator M for move
 
-        //length of the command payload is 4 bytes header is always eight bytes
-        var commandLength = 12; //2 bytes
+        //length of the command payload is 6 bytes header is always eight bytes
+        var commandLength = 14; //2 bytes
 
         //create an array buffer of commandLength bytes
         //create a dataview for the buffer
@@ -153,11 +205,15 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setInt8(8, speedLeft);
         dataView.setInt8(9, speedRight);
-        dataView.setUint16(10, time);
+
+        dataView.setInt8(10, speedLeft > 0 ? 0 : 1);
+        dataView.setInt8(11, speedRight > 0 ? 0 : 1);
+
+        dataView.setUint16(12, time);
 
         $scope.sendToBluetoothService(dataView);
     }
@@ -181,7 +237,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
 
         $scope.sendToBluetoothService(dataView);
     }
@@ -204,7 +260,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint8(8, intensity);
         dataView.setUint16(9, onTime);
@@ -232,7 +288,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint8(8, deviceID);
 
@@ -257,15 +313,14 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint8(8, deviceID);
 
         $scope.sendToBluetoothService(dataView);
     }
 
-    $scope.WaggleCommand = function(intensity, onTime, repeat, delay)
-    {
+    $scope.WaggleCommand = function (intensity, onTime, repeat, delay) {
         //waggle robot
         var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
@@ -284,7 +339,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint8(8, intensity);
         dataView.setUint16(9, onTime);
@@ -294,8 +349,7 @@
         $scope.sendToBluetoothService(dataView);
     }
 
-    $scope.RecoilCommand = function(intensity, onTime, repeat, delay)
-    {
+    $scope.RecoilCommand = function (intensity, onTime, repeat, delay) {
         //recoil of robot
         var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
@@ -313,7 +367,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint8(8, intensity);
         dataView.setUint16(9, onTime);
@@ -323,8 +377,7 @@
         $scope.sendToBluetoothService(dataView);
     }
 
-    $scope.ToggleCommand = function (deviceFlags, state, onTime, offTime)
-    {
+    $scope.ToggleCommand = function (deviceFlags, state, onTime, offTime) {
         //toggle robot
         var commandIndex = $scope.incrementCommandIndex();
         var commandBehaviour = 0;
@@ -381,7 +434,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint8(8, SoundIdx);
         dataView.setUint8(9, repeat);
@@ -408,7 +461,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint8(8, interactionType);
         dataView.setUint8(9, sourceID);
@@ -435,7 +488,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint8(8, intensity);
         dataView.setUint32(9, targetID);
@@ -461,7 +514,7 @@
         dataView.setUint8(0, commandIndex);
         dataView.setUint8(1, commandBehaviour);
         dataView.setUint16(2, commandLength);
-        dataView.setUint8(7, CommandType);
+        dataView.setUint8(7, CommandType.charCodeAt());
         //commandPayload = bytes 8 to 20
         dataView.setUint32(8, targetID);
 
@@ -485,47 +538,54 @@
     $scope.clickJoystickTop = function () {
         //move forward
 
-        $scope.MoveCommand(100, 100, 10000);
-        //bluetoothService.sendMessage({ "message": "up", "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" })
+        //$scope.MoveCommand(100, 100, 10000);
+
+        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [127, 127, 2000]), droid: $scope.getSelectedDroid() };
+        $scope.commandQueue.push(commandObj);
     }
 
     $scope.clickJoytickBottom = function () {
         //move Backward
-        $scope.MoveCommand(-100, -100, 10000);
+        //$scope.MoveCommand(-100, -100, 10000);
 
-        //bluetoothService.sendMessage({ "message": "down", "serviceUuid": "6e400001-b5a3-f393-e0a9-e50e24dcca9e", "characteristicUuid": "6e400002-b5a3-f393-e0a9-e50e24dcca9e" })
+        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [-127, -127, 2000]), droid: $scope.getSelectedDroid() };
+        $scope.commandQueue.push(commandObj);
     }
     //
 
     /*Differential Specific Methods*/
     $scope.clickDifferentialLeftForward = function () {
         //move left forward
-        $scope.MoveCommand(-100, 0, 1000);
+        //$scope.MoveCommand(-100, 0, 1000);
 
-        //bluetoothService.sendMessage("clickDifferentialLeftForward");
+        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [127, 127, 1000]), droid: $scope.getSelectedDroid() };
+        $scope.commandQueue.push(commandObj);
     }
 
     $scope.clickDifferentialLeftReverse = function () {
         //move left reverse
-        $scope.MoveCommand(-100, 0, 1000);
+        //$scope.MoveCommand(-100, 0, 1000);
 
-        //bluetoothService.sendMessage("clickDifferentialLeftReverse");
+        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [-127, -127, 1000]), droid: $scope.getSelectedDroid() };
+        $scope.commandQueue.push(commandObj);
     }
 
     $scope.clickDifferentialRightReverse = function () {
 
         //move right reverse
-        $scope.MoveCommand(0, -100, 1000);
+        //$scope.MoveCommand(0, -100, 1000);
 
-        //bluetoothService.sendMessage("clickDifferentialRightReverse");
+        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [0, -127, 500]), droid: $scope.getSelectedDroid() };
+        $scope.commandQueue.push(commandObj);
     }
 
     $scope.clickDifferentialRightForward = function () {
 
         //move right forward
-        $scope.MoveCommand(0, 100, 1000);
+        //$scope.MoveCommand(0, 100, 1000);
 
-        //bluetoothService.sendMessage("clickDifferentialRightForward");
+        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [0, 127, 500]), droid: $scope.getSelectedDroid() };
+        $scope.commandQueue.push(commandObj);
     }
 
     //
@@ -547,37 +607,37 @@
         $scope.commandQueue.push(commandObj);
 
 
-       // bluetoothService.sendMessage("Shoot");
+        // bluetoothService.sendMessage("Shoot");
     }
 
     $scope.clickWaggleCommand = function () {
 
-//        $scope.ToggleCommand(1, 2, 1000, 1000);
+        //        $scope.ToggleCommand(1, 2, 1000, 1000);
         $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [1, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //waggle robot
-        
-       // $scope.WaggleCommand(100, 5000, 2, 5000)
+
+        // $scope.WaggleCommand(100, 5000, 2, 5000)
     }
 
     $scope.clickspinCommand = function () {
 
-//        $scope.ToggleCommand(2, 2, 1000, 1000);
+        //        $scope.ToggleCommand(2, 2, 1000, 1000);
         $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [2, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //bluetoothService.sendMessage("Spin");
     }
 
     $scope.clickRecoilCommand = function () {
 
-//       $scope.ToggleCommand(3, 2, 1000, 1000);
+        //       $scope.ToggleCommand(3, 2, 1000, 1000);
         $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [3, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //bluetoothService.sendMessage("Recoil");
     }
 
     $scope.clickDanceCommand = function () {
 
-//        $scope.ToggleCommand(4, 2, 1000, 1000);
+        //        $scope.ToggleCommand(4, 2, 1000, 1000);
         $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [4, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
-       // bluetoothService.sendMessage("Dance");
+        // bluetoothService.sendMessage("Dance");
     }
 
     $scope.clickToggleCommand = function () {
@@ -600,10 +660,15 @@
     //destroy intervals and timeouts
     $scope.$on('$stateChangeStart',
     function (event, toState, toParams, fromState, fromParams) {
-
         $interval.cancel($scope.CommandExecutionInterval);
-
-    })
+        console.log("CommandExecutionInterval canceled");
+        if ($scope.DifferentialMovementInterval != null) {
+            $interval.cancel($scope.DifferentialMovementInterval);
+            $scope.DifferentialMovementInterval = null;
+        }
+        //set free to execute to true
+        $scope.setFreeToExecute(true);
+    });
 
 
 }]);
