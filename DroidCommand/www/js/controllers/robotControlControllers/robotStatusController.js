@@ -111,7 +111,7 @@
         }
 
         droid.Mode = 'Autonomous';
-
+        $scope.StartCommandExecutionInterval();
         droid.BehaviourTimer = $timeout(function () { timeoutCommandPipingFunction(droid, 0) }, 10);
 
     }

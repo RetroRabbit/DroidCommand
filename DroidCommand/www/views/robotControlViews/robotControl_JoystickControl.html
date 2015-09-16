@@ -2,53 +2,60 @@
     <div id="controlSelectionRow" class="row "  style="height: 20%;background-color: #85CFE5; ">
         <div class=" col-xs-4 fill">
              <a data-ng-click="navigateBetweenControls('')"> 
-                <div id="controlMenuJoystick" ng-class="{ imgControlsMenuJoystick: isControlSelected(''), imgControlsMenuJoystickUnselected: !isControlSelected(''), imgControlsMenu : true}"></div>
+                <div id="controlMenuJoystick" class="imgControlsMenuJoystick imgControlsMenu"></div>
             </a>
         </div>
         <div class=" col-xs-4 fill">
              <a data-ng-click="navigateBetweenControls('.differentialControl')"> 
-                <div id="controlMenuDifferential" ng-class="{ imgControlsMenuDifferential: isControlSelected('.differentialControl'), imgControlsMenuDifferentialUnselected: !isControlSelected('.differentialControl'), imgControlsMenu : true}"></div>
+                <div id="controlMenuDifferential" class="imgControlsMenuDifferentialUnselected imgControlsMenu"></div>
             </a>
         </div>
         <div class=" col-xs-4 fill">
              <a data-ng-click="navigateBetweenControls('.motionControl')"> 
-                <div id="controlMenuaMotion" ng-class="{ imgControlsMenuMotion: isControlSelected('.motionControl'), imgControlsMenuMotionUnselected: !isControlSelected('.motionControl'), imgControlsMenu : true}"></div>
+                <div id="controlMenuaMotion" class="imgControlsMenuMotionUnselected imgControlsMenu"></div>
             </a>
         </div>
     </div>
+    <div class="row" hm-pan="OnPanAll($event)" hm-recognizer-options="[{'type':'pan','directions':'DIRECTION_ALL'}]"  style="height: 80%">
+        <div class=" col-xs-12 fill">
+        
+            <div class="row"   style="height: 15%">
+                <div class=" col-xs-3 fill">
+                    <div data-ng-click="clickShootCommand()" class="controlShootCommand imgControls"></div>
+                </div>
+                <div class=" col-xs-6 fill noLeftOrRightPadding">
+                    <div data-ng-click="clickJoystickTop()" class="imgJoystickTop imgControls"></div>
+                </div>
+                <div class=" col-xs-3 fill">
+                    <div data-ng-click="clickWaggleCommand()" class="controlWaggleCommand imgControls"></div>
+                </div>
+            </div>
+            <div class="row" style="height: 50%">
+                <div class=" col-xs-2 fill noLeftPadding">
+                    <div data-ng-click="clickJoystickLeft()" class="imgJoystickLeft imgControls"></div>
+                </div>
+                <div class=" col-xs-8 fill noLeftOrRightPadding">
+                    <div class="imgJoystickCentre imgControls"></div>
+                </div>
+                <div class=" col-xs-2 fill noRightPadding">
+                    <div data-ng-click="clickJoystickRight()" class="imgJoystickRight imgControls"></div>
+                </div>
+            </div>
+            <div class="row"   style="height: 15%">
+                <div class=" col-xs-3 fill">
+                    <div data-ng-click="clickSpinCommand()" class="controlSpinCommand imgControls"></div>
+                </div>
+                <div class=" col-xs-6 fill noLeftOrRightPadding">
+                    <div data-ng-click="clickJoytickBottom()" class="imgJoystickBottom imgControls "></div>
+                </div>
+                <div class=" col-xs-3 fill">
+                    <div data-ng-click="clickMoreCommands()" class="controlMoreCommand imgControls"></div>
+                </div>
+            </div>        
 
-    <div class="row"   style="height: 15%">
-        <div class=" col-xs-3 fill">
-            <div data-ng-click="clickShootCommand()" class="controlShootCommand imgControls"></div>
-        </div>
-        <div class=" col-xs-6 fill noLeftOrRightPadding">
-            <div data-ng-click="clickJoystickTop()" class="imgJoystickTop imgControls"></div>
-        </div>
-        <div class=" col-xs-3 fill">
-            <div data-ng-click="clickWaggleCommand()" class="controlWaggleCommand imgControls"></div>
-        </div>
+            </div>
+       
     </div>
-    <div class="row" style="height: 50%">
-        <div class=" col-xs-2 fill noLeftPadding">
-            <div data-ng-click="clickJoystickLeft()" class="imgJoystickLeft imgControls"></div>
-        </div>
-        <div class=" col-xs-8 fill noLeftOrRightPadding">
-            <div class="imgJoystickCentre imgControls"></div>
-        </div>
-        <div class=" col-xs-2 fill noRightPadding">
-            <div data-ng-click="clickJoystickRight()" class="imgJoystickRight imgControls"></div>
-        </div>
-    </div>
-    <div class="row"   style="height: 15%">
-        <div class=" col-xs-3 fill">
-            <div data-ng-click="clickSpinCommand()" class="controlSpinCommand imgControls"></div>
-        </div>
-        <div class=" col-xs-6 fill noLeftOrRightPadding">
-            <div data-ng-click="clickJoytickBottom()" class="imgJoystickBottom imgControls "></div>
-        </div>
-        <div class=" col-xs-3 fill">
-            <div data-ng-click="clickMoreCommands()" class="controlMoreCommand imgControls"></div>
-        </div>
-    </div>
+
 
 </div>

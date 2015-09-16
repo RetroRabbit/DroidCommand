@@ -1,5 +1,5 @@
 ﻿angular.module('driodCommand')
-.controller('RobotControlController', ['$scope', '$rootScope', '$location', '$http', '$state', '$swipe', '$interval', 'bluetoothService', function ($scope, $rootScope, $location, $http, $state, $swipe, $interval, bluetoothService) {
+.controller('RobotControlController', ['$scope', '$rootScope', '$location', '$http', '$state', '$interval', 'bluetoothService', function ($scope, $rootScope, $location, $http, $state, $interval, bluetoothService) {
 
     $scope.viewName = "";
     $scope.getViewName = function () {
@@ -13,8 +13,15 @@
         };
     }
 
+    $scope.CommandExecutionInterval = null;
     //start interval that executes commands to the droids
-    $scope.CommandExecutionInterval = $interval($scope.executeCommandInQueue, 100);
+    $scope.StartCommandExecutionInterval = function()
+    {
+        if ($scope.CommandExecutionInterval == null) {
+            $scope.CommandExecutionInterval = $interval($scope.executeCommandInQueue, 100);
+        }
+
+    }
 
     //function that executes the next command within the queue
     $scope.executeCommandInQueue = function () {
@@ -120,6 +127,7 @@
     $scope.DifferentialMovementInterval = null;
     $scope.startDifferentialMovement = function () {
         if ($scope.DifferentialMovementInterval == null) {
+            $scope.StartCommandExecutionInterval();
             $scope.DifferentialMovementInterval = $interval($scope.ExecuteDifferentialMovement, 200);
         }
     }
@@ -146,6 +154,33 @@
 
         $scope.MoveLeft = 0;
         $scope.MoveRight = 0;
+    }
+
+    $scope.OnPanAll = function (event) {
+        $scope.startDifferentialMovement();
+
+        switch (event.direction) {
+            case 2:
+                console.log('Left');
+                $scope.MoveLeft++;
+                $scope.MoveRight = 0;
+                break;
+            case 4:
+                console.log('Right');
+                $scope.MoveLeft = 0;
+                $scope.MoveRight++;
+                break;
+            case 8:
+                console.log('Up');
+                $scope.MoveLeft++;
+                $scope.MoveRight++;
+                break;
+            case 16:
+                console.log('Down');
+                $scope.MoveLeft--;
+                $scope.MoveRight--;
+                break;
+        }
     }
 
     $scope.onPanleft = function (event) {
@@ -601,7 +636,7 @@
     }
 
     $scope.clickShootCommand = function () {
-
+        $scope.StartCommandExecutionInterval();
         //$scope.ToggleCommand(0, 2, 1000, 1000);
         var commandObj = { command: $scope.wrapFunction($scope.ToggleCommand, this, [0, 2, 1000, 1000]), droid: $scope.getSelectedDroid() };
         $scope.commandQueue.push(commandObj);
@@ -611,7 +646,7 @@
     }
 
     $scope.clickWaggleCommand = function () {
-
+        $scope.StartCommandExecutionInterval();
         //        $scope.ToggleCommand(1, 2, 1000, 1000);
         $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [1, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //waggle robot
@@ -620,28 +655,28 @@
     }
 
     $scope.clickspinCommand = function () {
-
+        $scope.StartCommandExecutionInterval();
         //        $scope.ToggleCommand(2, 2, 1000, 1000);
         $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [2, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //bluetoothService.sendMessage("Spin");
     }
 
     $scope.clickRecoilCommand = function () {
-
+        $scope.StartCommandExecutionInterval();
         //       $scope.ToggleCommand(3, 2, 1000, 1000);
         $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [3, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         //bluetoothService.sendMessage("Recoil");
     }
 
     $scope.clickDanceCommand = function () {
-
+        $scope.StartCommandExecutionInterval();
         //        $scope.ToggleCommand(4, 2, 1000, 1000);
         $scope.commandQueue.push({ command: $scope.wrapFunction($scope.ToggleCommand, this, [4, 2, 1000, 1000]), droid: $scope.getSelectedDroid() });
         // bluetoothService.sendMessage("Dance");
     }
 
     $scope.clickToggleCommand = function () {
-
+        $scope.StartCommandExecutionInterval();
         // TODO NB check device flags, may have to set bit ugh
         //    deviceFlags = [0, 0, 0, 0, 0, 0, 0, 0];
         //    state = 0;
@@ -652,7 +687,7 @@
     }
 
     $scope.clickPlayCommand = function () {
-
+        $scope.StartCommandExecutionInterval();
         //play sound on robot
         $scope.PlayCommand(1, 0, 0);
     }
@@ -660,8 +695,12 @@
     //destroy intervals and timeouts
     $scope.$on('$stateChangeStart',
     function (event, toState, toParams, fromState, fromParams) {
-        $interval.cancel($scope.CommandExecutionInterval);
-        console.log("CommandExecutionInterval canceled");
+
+        if ($scope.CommandExecutionInterval != null) {
+            $interval.cancel($scope.CommandExecutionInterval);
+            $scope.CommandExecutionInterval = null;
+            console.log("CommandExecutionInterval canceled");
+        }
         if ($scope.DifferentialMovementInterval != null) {
             $interval.cancel($scope.DifferentialMovementInterval);
             $scope.DifferentialMovementInterval = null;

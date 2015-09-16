@@ -2,17 +2,17 @@
     <div id="controlSelectionRow" class="row "  style="height: 20%;background-color: #85CFE5; ">
         <div class=" col-xs-4 fill">
              <a data-ng-click="navigateBetweenControls('')"> 
-                <div id="controlMenuJoystick" ng-class="{ imgControlsMenuJoystick: isControlSelected(''), imgControlsMenuJoystickUnselected: !isControlSelected(''), imgControlsMenu : true}"></div>
+                <div id="controlMenuJoystick" class="imgControlsMenuJoystickUnselected imgControlsMenu"></div>
             </a>
         </div>
         <div class=" col-xs-4 fill">
              <a data-ng-click="navigateBetweenControls('.differentialControl')"> 
-                <div id="controlMenuDifferential" ng-class="{ imgControlsMenuDifferential: isControlSelected('.differentialControl'), imgControlsMenuDifferentialUnselected: !isControlSelected('.differentialControl'), imgControlsMenu : true}"></div>
+                <div id="controlMenuDifferential" class="imgControlsMenuDifferential imgControlsMenu"></div>
             </a>
         </div>
         <div class=" col-xs-4 fill">
              <a data-ng-click="navigateBetweenControls('.motionControl')"> 
-                <div id="controlMenuaMotion" ng-class="{ imgControlsMenuMotion: isControlSelected('.motionControl'), imgControlsMenuMotionUnselected: !isControlSelected('.motionControl'), imgControlsMenu : true}"></div>
+                <div id="controlMenuaMotion" class="imgControlsMenuMotionUnselected imgControlsMenu"></div>
             </a>
         </div>
     </div>

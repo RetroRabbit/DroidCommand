@@ -1,5 +1,5 @@
-﻿angular.module('driodCommand', ['ui.router', 'hmTouchEvents', 'ui.slider', 'ngTouch', 'angular-blockly'])
-    .config(function ($stateProvider, $urlRouterProvider, ngBlocklyProvider) {
+﻿angular.module('driodCommand', ['ui.router', 'hmTouchEvents', 'ui.slider'])
+    .config(function ($stateProvider, $urlRouterProvider) {
     
 
         $urlRouterProvider.otherwise('/odyssey');

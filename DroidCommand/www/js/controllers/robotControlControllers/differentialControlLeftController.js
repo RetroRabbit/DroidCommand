@@ -1,9 +1,6 @@
 ﻿angular.module('driodCommand')
-.controller('DifferentialControlLeftController', ['$scope', '$location', '$http', '$swipe', function ($scope, $location, $http, $swipe) {
+.controller('DifferentialControlLeftController', ['$scope', '$location', '$http', function ($scope, $location, $http) {
 
-    $scope.onHammer = function (event) {
-        console.log("onHammer");
-    }
 
 
 }]);

@@ -1,5 +1,5 @@
 ﻿angular.module('driodCommand')
-.controller('appController', ['$scope', '$rootScope', '$location', '$http', '$state', 'bluetoothService', 'droidService', function ($scope, $rootScope, $location, $http, $state, bluetoothService, droidService) {
+.controller('appController', ['$scope', '$rootScope', '$location', '$http', '$state','$interval', 'bluetoothService', 'droidService', function ($scope, $rootScope, $location, $http, $state, $interval, bluetoothService, droidService) {
 
     //THIS IS THE PARENT CONTROLLER FOR THE APP.
     //ALL BLUETOOTH DEVICE CONTROL SHOULD HAPPEN HERE
@@ -115,7 +115,7 @@
     $scope.ConnectionUpdateInterval = null;
     $scope.startConnectionUpdate = function () {
         if ($scope.ConnectionUpdateInterval == null) {
-            $scope.ConnectionUpdateInterval = $interval($scope.UpdateConnectionInfo, 500);
+            $scope.ConnectionUpdateInterval = $interval($scope.UpdateConnectionInfo, 1000);
         }
     }
     //update the scope with new connection info
@@ -123,8 +123,7 @@
         $scope.getDeviceList();
         $scope.getFeedback();
          
-
-        $scope.$apply();
+        //$scope.$apply();
     }
 
     //client side to check if device has been discovered at least once
