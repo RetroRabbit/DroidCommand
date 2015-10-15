@@ -40,21 +40,6 @@
 
     }
 
-    //when leaving the controller
-    //$rootScope.$on('$stateChangeStart',
-    //function (event, toState, toParams, fromState, fromParams) {
-
-    //    $interval.cancel($scope.CommandExecutionInterval);
-    //    console.log("CommandExecutionInterval canceled");
-    //    if($scope.DifferentialMovementInterval != null)
-    //    {
-    //        $interval.cancel($scope.DifferentialMovementInterval);
-    //        $scope.DifferentialMovementInterval = null;
-    //    }
-    //    //set free to execute to true
-    //    $scope.setFreeToExecute(true);
-    //});
-
 
     //this function create an array of default behaviour for a robot
     $scope.createDefaultBehaviour = function () {
@@ -134,53 +119,84 @@
 
     $scope.MoveLeft = 0;
     $scope.MoveRight = 0;
-
+    $scope.LastCommand = null;
     //creates movement command based off of differential movement object
     $scope.ExecuteDifferentialMovement = function () {
 
         var leftWeight = 0;
         var rightWeight = 0;
 
-        if ($scope.MoveLeft != 0)
+        if ($scope.MoveLeft != 0) {
             leftWeight = $scope.MoveLeft < 0 ? -127 : 127;
+        }
 
-        if ($scope.MoveRight != 0)
+        if ($scope.MoveRight != 0) {
             rightWeight = $scope.MoveRight < 0 ? -127 : 127;
+        }
 
         if ($scope.MoveLeft != 0 || $scope.MoveRight != 0) {
-            var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [leftWeight, rightWeight, 1000]), droid: $scope.getSelectedDroid() };
-            $scope.commandQueue.push(commandObj);
+            $scope.LastCommand = { command: $scope.wrapFunction($scope.MoveCommand, this, [leftWeight, rightWeight, 500]), droid: $scope.getSelectedDroid() };
+            $scope.commandQueue.push($scope.LastCommand);
+        }
+        else if ($scope.IsStillPanning == true && $scope.LastCommand != null)
+        {
+            $scope.commandQueue.push($scope.LastCommand);
         }
 
         $scope.MoveLeft = 0;
         $scope.MoveRight = 0;
     }
+    
 
+    
     $scope.OnPanAll = function (event) {
         $scope.startDifferentialMovement();
 
         switch (event.direction) {
+
             case 2:
                 console.log('Left');
-                $scope.MoveLeft++;
-                $scope.MoveRight = 0;
+                if (!(event.distance + 10 > $scope.DistanceAll && event.distance - 10 < $scope.DistanceAll)) {
+                    $scope.MoveLeft = 0;
+                    $scope.MoveRight++;
+                }
                 break;
             case 4:
                 console.log('Right');
-                $scope.MoveLeft = 0;
-                $scope.MoveRight++;
+                if (!(event.distance + 10 > $scope.DistanceAll && event.distance - 10 < $scope.DistanceAll)) {
+                    $scope.MoveLeft++;
+                    $scope.MoveRight = 0;
+                }
                 break;
             case 8:
                 console.log('Up');
-                $scope.MoveLeft++;
-                $scope.MoveRight++;
+                if (!(event.distance + 10 > $scope.DistanceAll && event.distance - 10 < $scope.DistanceAll)) {
+                    $scope.MoveLeft++;
+                    $scope.MoveRight++;
+                }
                 break;
             case 16:
                 console.log('Down');
-                $scope.MoveLeft--;
-                $scope.MoveRight--;
+                if (!(event.distance + 10 > $scope.DistanceAll && event.distance - 10 < $scope.DistanceAll)) {
+                    $scope.MoveLeft--;
+                    $scope.MoveRight--;
+                }
+                break;
+            case 1:
+                console.log('None');
+                $scope.DistanceAll = event.distance;
+                break;
+            case 6:
+                console.log('DIRECTION_HORIZONTAL');
+                break;
+            case 24:
+                console.log('DIRECTION_VERTICAL');
+                break;
+            case 30:
+                console.log('DIRECTION_ALL');
                 break;
         }
+        console.log('Distance: ' + event.distance);
     }
 
     $scope.onPanleft = function (event) {
@@ -188,14 +204,23 @@
 
         switch (event.direction) {
             case 8:
-                console.log('left Up');
-                $scope.MoveLeft++;
+                if (!(event.distance + 10 > $scope.DistanceLeft && event.distance - 10 < $scope.DistanceLeft)) {
+                    console.log('left Up');
+                    $scope.MoveLeft++;
+                }
                 break;
             case 16:
-                console.log('Left Down');
-                $scope.MoveLeft--;
+                if (!(event.distance + 10 > $scope.DistanceLeft && event.distance - 10 < $scope.DistanceLeft)) {
+                    console.log('Left Down');
+                    $scope.MoveLeft--;
+                }
+                break;
+            case 1:
+                console.log('Distance Left: None');
+                $scope.DistanceLeft = event.distance;
                 break;
         }
+        console.log('Left Distance: ' + event.distance);
     };
 
     $scope.onPanRight = function (event) {
@@ -203,16 +228,47 @@
 
         switch (event.direction) {
             case 8:
-                console.log('Up');
-                $scope.MoveRight++;
+                if (!(event.distance + 10 > $scope.DistanceRight && event.distance - 10 < $scope.DistanceRight)) {
+                    console.log('Up');
+                    $scope.MoveRight++;
+                }
                 break;
             case 16:
-                console.log('Down');
-                $scope.MoveRight--;
+                if (!(event.distance + 10 > $scope.DistanceRight && event.distance - 10 < $scope.DistanceRight)) {
+                    console.log('Down');
+                    $scope.MoveRight--;
+                }
+                break;
+            case 1:
+                console.log('Distance Right: None');
+                $scope.DistanceRight = event.distance;
                 break;
 
-        };
+        }
+        console.log('Right Distance: ' + event.distance);
     }
+
+    $scope.IsStillPanning = false;
+
+    $scope.OnPanStart = function (event) {
+        console.log('Pan start ');
+        $scope.IsStillPanning = true;
+    }
+
+    $scope.OnPanEnd = function (event) {
+        console.log('Pan End ');
+        $scope.IsStillPanning = false;
+    }
+
+    $scope.OnPanCancel = function (event) {
+        console.log('Pan Cancel ');
+        $scope.IsStillPanning = false;
+    }
+
+    //distance storage on pan event
+    $scope.DistanceAll = 0;
+    $scope.DistanceLeft = 0;
+    $scope.DistanceRight = 0;
 
     //sends command to bluetoothservice
     //so I only have to change it in one place

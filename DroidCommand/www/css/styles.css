@@ -229,9 +229,19 @@ html, body {
     background-image: url(../img/DifferentialControlForwardArrow.png);
 }
 
+.imgDifferentialForwardSelected
+{
+    background-image: url(../img/DifferentialControlForwardArrow_Selected.png);
+}
+
 .imgDifferentialReverse
 {
     background-image: url(../img/DifferentialControlReverseArrow.png);
+}
+
+.imgDifferentialReverseSelected
+{
+    background-image: url(../img/DifferentialControlReverseArrow_Selected.png);
 }
 
 .imgMotionTablet

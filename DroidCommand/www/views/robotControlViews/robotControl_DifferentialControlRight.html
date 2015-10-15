@@ -43,9 +43,8 @@
             </div>
            </div>
         </div>
-    <div id="DifferentialDriveRight"  hm-pan="onPanRight($event)" hm-recognizer-options="[{'type':'pan','directions':'DIRECTION_ALL'}]" class="row"  style="height: 80%;">
+    <div id="DifferentialDriveRight"  hm-pan="onPanRight($event)" hm-recognizer-options="[{'type':'pan','directions':'DIRECTION_ALL'}]" hm-panend="OnPanEnd($event)" hm-panstart="OnPanStart($event)" hm-pancancel="OnPanCancel($event)" class="row"  style="height: 80%;">
 
-        
         <div class="col-xs-12 fill  ">
             <div class="row" style="height:33%">
                 <div class="col-xs-12 fill ">

@@ -1,4 +1,4 @@
-﻿<div id="motionControl"  class="fill">
+﻿<div id="motionControl"  data-ng-controller="motionController" class="fill">
 
     <div id="controlSelectionRow" class="row "  style="height: 20%;background-color: #85CFE5; ">
         <div class=" col-xs-4 fill">
@@ -17,7 +17,7 @@
             </a>
         </div>
     </div>
-    <div class="row" style="height:30%;background-color: rgb(192, 225, 214);">
+    <div class="row" hm-press="toggleMotionControl($event)" style="height:30%;background-color: rgb(192, 225, 214);">
         <div class="col-xs-2 fill noLeftOrRightPadding">
             <div class="imgMotionLeft imgControls" style="height:80%"></div>
             <div style="height:20%;text-align:center;">left</div>
