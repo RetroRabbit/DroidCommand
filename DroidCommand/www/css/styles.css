@@ -208,27 +208,42 @@ html, body {
 {
     background-image: url(../img/JoystickControlLeftArrow.png);
 }
+.imgJoystickLeftSelected
+{
+    background-image: url(../img/JoystickControlLeftArrow_Selected.png);
+}
 
 .imgJoystickRight
 {
     background-image: url(../img/JoystickControlRightArrow.png);
+}
+.imgJoystickRightSelected
+{
+    background-image: url(../img/JoystickControlRightArrow_Selected.png);
 }
 
 .imgJoystickTop
 {
     background-image: url(../img/JoystickControlTopArrow.png);
 }
+.imgJoystickTopSelected
+{
+    background-image: url(../img/JoystickControlTopArrow_Selected.png);
+}
 
 .imgJoystickBottom
 {
     background-image: url(../img/JoystickControlBottomArrow.png);
+}
+.imgJoystickBottomSelected
+{
+    background-image: url(../img/JoystickControlBottomArrow_Selected.png);
 }
 
 .imgDifferentialForward
 {
     background-image: url(../img/DifferentialControlForwardArrow.png);
 }
-
 .imgDifferentialForwardSelected
 {
     background-image: url(../img/DifferentialControlForwardArrow_Selected.png);
@@ -238,7 +253,6 @@ html, body {
 {
     background-image: url(../img/DifferentialControlReverseArrow.png);
 }
-
 .imgDifferentialReverseSelected
 {
     background-image: url(../img/DifferentialControlReverseArrow_Selected.png);

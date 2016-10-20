@@ -1,5 +1,5 @@
 ﻿angular.module('driodCommand')
-.controller('RobotControlController', ['$scope', '$rootScope', '$location', '$http', '$state', '$interval', 'bluetoothService', function ($scope, $rootScope, $location, $http, $state, $interval, bluetoothService) {
+.controller('RobotControlController', ['$scope', '$rootScope', '$location', '$http', '$state', '$interval', 'bluetoothService', 'cordovaDeviceMotionService', function ($scope, $rootScope, $location, $http, $state, $interval, bluetoothService, cordovaDeviceMotionService) {
 
     $scope.viewName = "";
     $scope.getViewName = function () {
@@ -20,7 +20,6 @@
         if ($scope.CommandExecutionInterval == null) {
             $scope.CommandExecutionInterval = $interval($scope.executeCommandInQueue, 100);
         }
-
     }
 
     //function that executes the next command within the queue
@@ -646,44 +645,136 @@
 
     /*Differential Specific Methods*/
     $scope.clickDifferentialLeftForward = function () {
-        //move left forward
-        //$scope.MoveCommand(-100, 0, 1000);
-
-        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [127, 127, 1000]), droid: $scope.getSelectedDroid() };
+        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [127, 0, 1000]), droid: $scope.getSelectedDroid() };
         $scope.commandQueue.push(commandObj);
     }
 
     $scope.clickDifferentialLeftReverse = function () {
-        //move left reverse
-        //$scope.MoveCommand(-100, 0, 1000);
-
-        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [-127, -127, 1000]), droid: $scope.getSelectedDroid() };
+        var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [-127, 0, 1000]), droid: $scope.getSelectedDroid() };
         $scope.commandQueue.push(commandObj);
     }
 
     $scope.clickDifferentialRightReverse = function () {
-
-        //move right reverse
-        //$scope.MoveCommand(0, -100, 1000);
-
         var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [0, -127, 500]), droid: $scope.getSelectedDroid() };
         $scope.commandQueue.push(commandObj);
     }
 
     $scope.clickDifferentialRightForward = function () {
 
-        //move right forward
-        //$scope.MoveCommand(0, 100, 1000);
-
         var commandObj = { command: $scope.wrapFunction($scope.MoveCommand, this, [0, 127, 500]), droid: $scope.getSelectedDroid() };
         $scope.commandQueue.push(commandObj);
     }
 
-    //
-
     /*Motion Specific Methods*/
+    $scope.MotionMovementInterval = null;
 
-    //
+    //postition variables
+    $scope.postitionX = 0;
+    $scope.postitionY = 0;
+    $scope.motionMovementCommand = null;
+    $scope.motionCounter = 0;
+
+    $scope.startMotionControl = function (event) {
+
+        console.log('startMotionControl');
+
+        $scope.StartCommandExecutionInterval();
+
+        //to set current position in space
+        cordovaDeviceMotionService.getCurrentAcceleration(function (acceleration) {
+            console.log('Starting positions:\n Acceleration X: ' + acceleration.x + '\n' +
+                    'Acceleration Y: ' + acceleration.y + '\n' +
+                    'Acceleration Z: ' + acceleration.z + '\n *****************************************************'
+            );
+        });
+
+        console.log('start MotionMovementInterval');
+        $scope.MotionMovementInterval = $interval($scope.getAccelerometerInfo, 200);
+    }
+
+    $scope.stopMotionControl = function (event) {
+
+        $interval.cancel($scope.MotionMovementInterval);
+        console.log('stopMotionControl');
+        $scope.postitionX = 0;
+        $scope.postitionY = 0;
+        $scope.previousMovement = null;
+        console.log('stop MotionMovementInterval');
+    }
+
+    $scope.getAccelerometerInfo = function () {
+
+        cordovaDeviceMotionService.getCurrentAcceleration(function (acceleration) {
+            console.log('\nnr ' + $scope.motionCounter++ + '\nAcceleration X: ' + acceleration.x + '\n' +
+                  'Acceleration Y: ' + acceleration.y + '\n' +
+                  'Acceleration Z: ' + acceleration.z + '\n ---------------------------------------------'
+            );
+
+            if (Math.round(acceleration.x) == 0 && Math.round(acceleration.y) == 0) {
+                return;
+            }
+            else if (Math.round(acceleration.x) >= 1 && Math.round(acceleration.y) == 0) {
+                //$scope.motionMovementCommand = $scope.clickJoytickBottom();
+                $scope.motionMovementCommand = function () {
+                    $scope.commandQueue.push({ command: $scope.wrapFunction($scope.MoveCommand, this, [-127, -127, (Math.round(acceleration.x)+ 2) * 100]), droid: $scope.getSelectedDroid() });
+                }
+            }
+            else if (Math.round(acceleration.x) < 0 && Math.round(acceleration.y) == 0) {
+                //$scope.motionMovementCommand = $scope.clickJoystickTop();
+                $scope.motionMovementCommand = function () {
+                    $scope.commandQueue.push({ command: $scope.wrapFunction($scope.MoveCommand, this, [127, 127, (Math.abs(Math.round(acceleration.x))+ 2) * 100]), droid: $scope.getSelectedDroid() });
+                }
+            }
+            else if (Math.round(acceleration.y) >= 1 && Math.round(Math.round(acceleration.x)) >= 0) {
+                //$scope.motionMovementCommand = $scope.clickDifferentialRightReverse();
+                $scope.motionMovementCommand = function () {
+                    $scope.commandQueue.push({ command: $scope.wrapFunction($scope.MoveCommand, this, [0, -127, Math.round(acceleration.y) * 100]), droid: $scope.getSelectedDroid() });
+                }
+            }
+            else if (Math.round(acceleration.y) < 0 && Math.round(Math.round(acceleration.x)) >= 0) {   
+                //$scope.motionMovementCommand = $scope.clickDifferentialLeftReverse();
+                $scope.motionMovementCommand = function () {
+                    $scope.commandQueue.push({ command: $scope.wrapFunction($scope.MoveCommand, this, [-127, 0, Math.abs(Math.round(acceleration.y)) * 100]), droid: $scope.getSelectedDroid() });
+                };
+            }
+            else if (Math.round(acceleration.y) >= 1 && Math.round(Math.round(acceleration.x)) <= 0) {
+                //$scope.motionMovementCommand = $scope.clickDifferentialLeftForward();
+                $scope.motionMovementCommand = function () {
+                    $scope.commandQueue.push({ command: $scope.wrapFunction($scope.MoveCommand, this, [127, 0, Math.round(acceleration.y)*100]), droid: $scope.getSelectedDroid() });
+                }
+            }
+            else if (Math.round(acceleration.y) < 0 && Math.round(Math.round(acceleration.x)) <= 0) {
+                $scope.motionMovementCommand = function () {
+                    $scope.commandQueue.push({ command: $scope.wrapFunction($scope.MoveCommand, this, [0, 127, Math.abs(Math.round(acceleration.y)) * 100]), droid: $scope.getSelectedDroid() });
+                };
+            }
+
+            if ($scope.motionMovementCommand != null)
+            { $scope.motionMovementCommand(); }
+        });
+    }
+    
+    //this doesnt belong here. Must move. Function for precise rounding of decimals
+    function round(value, exp) {
+        if (typeof exp === 'undefined' || +exp === 0)
+            return Math.round(value);
+
+        value = +value;
+        exp = +exp;
+
+        if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+            return NaN;
+
+        // Shift
+        value = value.toString().split('e');
+        value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+
+        // Shift back
+        value = value.toString().split('e');
+        return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
+    }
+
+
 
     /*Robot Command Methods*/
     $scope.clickMoreCommands = function () {
@@ -761,6 +852,12 @@
             $interval.cancel($scope.DifferentialMovementInterval);
             $scope.DifferentialMovementInterval = null;
         }
+        if ($scope.MotionMovementInterval != null) {
+            $scope.isMotionControlEnabled = false;
+            $interval.cancel($scope.MotionMovementInterval);
+            $scope.MotionMovementInterval = null;
+        }
+
         //set free to execute to true
         $scope.setFreeToExecute(true);
     });

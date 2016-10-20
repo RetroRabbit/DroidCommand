@@ -4,32 +4,31 @@
  * License: MIT
  */
 
-'use strict';
+//'use strict';
 
-angular.module('driodCommand',
-  ['btford.phonegap.ready']).
-  factory('accelerometer', function ($rootScope, phonegapReady) {
-    return {
-      getCurrentAcceleration: phonegapReady(function (onSuccess, onError) {
-        navigator.accelerometer.getCurrentAcceleration(function () {
-          var that = this,
-            args = arguments;
+//angular.module('driodCommand').
+//  factory('accelerometer', function ($rootScope, phonegapReady) {
+    //return {
+      //getCurrentAcceleration: phonegapReady(function (onSuccess, onError) {
+      //  navigator.accelerometer.getCurrentAcceleration(function () {
+      //    var that = this,
+      //      args = arguments;
             
-          if (onSuccess) {
-            $rootScope.$apply(function () {
-              onSuccess.apply(that, args);
-            });
-          }
-        }, function () {
-          var that = this,
-            args = arguments;
+      //    if (onSuccess) {
+      //      $rootScope.$apply(function () {
+      //        onSuccess.apply(that, args);
+      //      });
+      //    }
+      //  }, function () {
+      //    var that = this,
+      //      args = arguments;
             
-          if (onError) {
-            $rootScope.$apply(function () {
-              onError.apply(that, args);
-            });
-          }
-        });
-      })
-    };
-  });
+      //    if (onError) {
+      //      $rootScope.$apply(function () {
+      //        onError.apply(that, args);
+      //      });
+      //    }
+      //  });
+      //})
+    //};
+  //});

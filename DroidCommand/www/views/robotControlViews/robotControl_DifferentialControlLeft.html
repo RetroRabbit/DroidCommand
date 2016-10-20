@@ -22,7 +22,7 @@
                        
             <div class="row" style="height:33%">
                 <div class="col-xs-12 fill ">
-                    <div class="imgDifferentialForward imgControls" ></div>
+                    <div ng-class="['imgControls', MoveLeft > 0 ? 'imgDifferentialForwardSelected' : 'imgDifferentialForward']" ></div>
                 </div>
             </div>
 
@@ -38,7 +38,7 @@
 
             <div class="row" style="height:33%">
                <div class="col-xs-12 fill ">
-                <div class="imgDifferentialReverse imgControls" ></div>
+                <div ng-class="['imgControls', MoveLeft< 0 ? 'imgDifferentialReverseSelected' : 'imgDifferentialReverse']"></div>
                </div>
             </div>
         </div>
